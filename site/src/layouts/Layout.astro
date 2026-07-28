@@ -1,0 +1,92 @@
+---
+import "../styles/global.css";
+import { formatDate, type Lang } from "../lib/types";
+import { useTranslations, basePath, otherLang } from "../i18n/ui";
+
+interface Props {
+  title: string;
+  description?: string;
+  lang?: Lang;
+  /** Path (without locale prefix) of the equivalent page in the other language. */
+  altPath?: string;
+  /** Full href of the equivalent page in the other language (overrides altPath). */
+  altHref?: string;
+}
+const { title, description, lang = "fr", altPath = "/", altHref } = Astro.props;
+const t = useTranslations(lang);
+const asOf = formatDate(new Date().toISOString().slice(0, 10), lang);
+const home = basePath[lang] || "/";
+const other = otherLang[lang];
+const otherBase = basePath[other] || "";
+const switchHref = altHref ?? (`${otherBase}${altPath}` || "/");
+---
+
+<!doctype html>
+<html lang={lang} data-theme="corporate">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+  </head>
+  <body class="min-h-screen bg-base-200 text-base-content flex flex-col">
+    <div id="nav-progress" class="fixed top-0 left-0 h-0.5 bg-primary z-50 transition-[width] duration-300 ease-out" style="width:0"></div>
+    <header class="navbar bg-base-100 border-b border-base-300 px-4 sm:px-8">
+      <div class="flex-1">
+        <a href={home} class="text-lg font-bold tracking-tight inline-flex items-center gap-2">
+          <span class="inline-block w-2.5 h-2.5 rounded-full bg-error"></span>
+          {t("site.brand")}
+        </a>
+      </div>
+      <div class="flex-none">
+        <a href={switchHref} class="link link-hover text-sm font-medium">{t("lang.switch")}</a>
+      </div>
+    </header>
+
+    <div class="bg-base-100 border-b border-base-300 px-4 sm:px-8 py-1.5 text-xs opacity-70 flex flex-wrap items-center justify-center gap-x-2">
+      <span>{t("strip.updated")} {asOf}</span>
+      <span class="w-px h-[0.8em] bg-current opacity-30"></span>
+      <span>{t("strip.source")} <a class="link" href="https://www.cmq.org/fr/bottin" rel="nofollow">{t("source.name")}</a></span>
+    </div>
+
+    <main class="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-8 py-8">
+      <slot />
+    </main>
+
+    <footer class="bg-base-100 border-t border-base-300 px-4 sm:px-8 py-8 text-sm">
+      <div class="max-w-5xl mx-auto space-y-3">
+        <p class="opacity-80">
+          <strong>{t("footer.noticeStrong")}</strong> {t("footer.noticeBefore")}{" "}
+          <a class="link" href="https://www.cmq.org/fr/bottin" rel="nofollow">{t("footer.officialLink")}</a>{" "}
+          {t("footer.noticeAfter")}
+        </p>
+        <p class="opacity-70">
+          {t("footer.errorPrompt")}{" "}
+          <a class="link" href={`${basePath[lang]}/contact`}>{t("footer.contact")}</a>.
+        </p>
+        <p class="opacity-70">
+          <a class="link" href={`${basePath[lang]}${lang === "fr" ? "/a-propos" : "/about"}`}>{t("footer.about")}</a>
+        </p>
+      </div>
+    </footer>
+    <script is:inline>
+      // Immediate feedback on internal navigation (filters, pagination, cards):
+      // a thin top progress bar that a fresh page load naturally clears.
+      (function () {
+        const bar = document.getElementById("nav-progress");
+        if (!bar) return;
+        document.addEventListener("click", (e) => {
+          if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+          const a = e.target.closest("a");
+          if (!a) return;
+          const href = a.getAttribute("href") || "";
+          if (a.target === "_blank" || a.hasAttribute("download")) return;
+          if (!href || href.startsWith("#") || href.startsWith("mailto:") || /^https?:\/\//.test(href)) return;
+          bar.style.width = "85%";
+        });
+        window.addEventListener("pageshow", () => { bar.style.width = "0"; });
+      })();
+    </script>
+  </body>
+</html>

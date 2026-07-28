@@ -1,0 +1,80 @@
+name: Weekly sanctions refresh
+
+# Incremental weekly update built on the CMQ avis feeds (getNoticeListing).
+# Reads the rolling ~3-month disciplinary notices, refreshes only the affected
+# doctors, rebuilds site/src/data/doctors.json, commits the changes, and — when
+# something changed — opens a GitHub issue summarizing it. The push to main
+# triggers deploy.yml, which republishes the site.
+#
+# STATE PERSISTENCE (no data branch):
+#   The working set the refresh needs is small and PII-free, so it lives on main:
+#     - data/disciplined.jsonl      (minimized: no contact PII, see collect.minimize_detail)
+#     - data/notices_ledger.jsonl   (public avis history)
+#   The decision PDF/text cache (data/decisions/**) is re-fetchable public
+#   documents, so it uses actions/cache — if evicted, refresh.py just re-downloads
+#   it that week (the fetcher is idempotent). The raw full registry
+#   (data/physicians.jsonl) is never committed and is not needed here.
+
+on:
+  schedule:
+    - cron: "0 9 * * 1" # Mondays 09:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Restore decision PDF cache
+        uses: actions/cache@v4
+        with:
+          path: data/decisions
+          key: decisions-${{ github.run_id }}
+          restore-keys: decisions-
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install collector dependencies
+        run: pip install -r collector/requirements.txt
+
+      - name: Run incremental refresh
+        working-directory: collector
+        run: python refresh.py --rate 2
+
+      - name: Commit refreshed data
+        run: |
+          git config user.name "sanctions-bot"
+          git config user.email "actions@github.com"
+          git add data/disciplined.jsonl data/notices_ledger.jsonl site/src/data/doctors.json
+          if git diff --cached --quiet; then
+            echo "No changes this week."
+          else
+            git commit -m "data: weekly refresh $(date -u +%Y-%m-%d)"
+            git push origin HEAD:main
+          fi
+
+      - name: Open an issue when something changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          summary="data/refresh_summary.md"
+          if [ -f "$summary" ] && ! grep -q "Aucun changement cette semaine." "$summary"; then
+            gh issue create \
+              --title "Mise à jour des sanctions / Sanctions update ($(date -u +%Y-%m-%d))" \
+              --body-file "$summary"
+          else
+            echo "Nothing to report."
+          fi

@@ -1,0 +1,15 @@
+---
+import DoctorPage from "../../../components/DoctorPage.astro";
+import { doctors } from "../../../data/sample";
+
+export function getStaticPaths() {
+  return doctors.map((doctor) => ({
+    params: { slug: doctor.slug },
+    props: { doctor },
+  }));
+}
+
+const { doctor } = Astro.props;
+---
+
+<DoctorPage doctor={doctor} lang="en" />

@@ -1,0 +1,21 @@
+---
+import ListingPage from "../../../../components/ListingPage.astro";
+import { doctors } from "../../../../data/sample";
+import { siteConfig } from "../../../../lib/config";
+import { statusFilterOf, sortDate, type StatusFilter } from "../../../../lib/types";
+
+export function getStaticPaths({ paginate }) {
+  const statuses: StatusFilter[] = ["radie", "limite", "antecedent"];
+  return statuses.flatMap((status) => {
+    const filtered = [...doctors]
+      .filter((d) => statusFilterOf(d) === status)
+      .sort((a, b) => sortDate(b).localeCompare(sortDate(a)));
+    return paginate(filtered, { pageSize: siteConfig.listPageSize, params: { status } });
+  });
+}
+
+const { page } = Astro.props;
+const { status } = Astro.params;
+---
+
+<ListingPage lang="en" page={page} activeFilter={status} />

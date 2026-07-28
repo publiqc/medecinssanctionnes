@@ -1,0 +1,64 @@
+---
+import Layout from "../layouts/Layout.astro";
+import DoctorCard from "./DoctorCard.astro";
+import Pagination from "./Pagination.astro";
+import { useTranslations } from "../i18n/ui";
+import type { Doctor, Lang } from "../lib/types";
+
+interface Props {
+  lang: Lang;
+  activeFilter?: string;
+  page: {
+    data: Doctor[];
+    total: number;
+    currentPage: number;
+    lastPage: number;
+    url: { prev?: string; next?: string };
+  };
+}
+const { lang, page, activeFilter = "all" } = Astro.props;
+const t = useTranslations(lang);
+
+const base = lang === "fr" ? "/medecins" : "/en/doctors";
+const filters = [
+  { key: "all", label: t("stats.doctors"), href: `${base}/1` },
+  { key: "radie", label: t("status.radiated"), href: `${base}/radie/1` },
+  { key: "limite", label: t("status.restricted"), href: `${base}/limite/1` },
+  { key: "antecedent", label: t("status.record"), href: `${base}/antecedent/1` },
+];
+
+const titleByFilter: Record<string, string> = {
+  radie: t("status.radiated"),
+  limite: t("status.restricted"),
+  antecedent: t("status.record"),
+};
+const title = titleByFilter[activeFilter] ?? t("list.title");
+
+const altBase = lang === "fr" ? "/en/doctors" : "/medecins";
+const suffix = activeFilter === "all" ? `/${page.currentPage}` : `/${activeFilter}/${page.currentPage}`;
+const altHref = `${altBase}${suffix}`;
+---
+
+<Layout title={title} lang={lang} altHref={altHref}>
+  <div class="mb-4">
+    <h1 class="text-3xl font-bold tracking-tight">{title}</h1>
+    <p class="opacity-70 mt-1">{page.total} {t("list.count")}</p>
+  </div>
+
+  <div class="flex flex-wrap gap-2 mb-6">
+    {filters.map((f) => (
+      <a
+        href={f.href}
+        class:list={["btn btn-sm", f.key === activeFilter ? "btn-primary" : "btn-ghost border border-base-300"]}
+      >
+        {f.label}
+      </a>
+    ))}
+  </div>
+
+  <ul class="grid gap-3">
+    {page.data.map((d) => <DoctorCard doctor={d} lang={lang} />)}
+  </ul>
+
+  <Pagination page={page} lang={lang} />
+</Layout>

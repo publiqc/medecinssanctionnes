@@ -1,0 +1,21 @@
+---
+import { sanctionLabel, sanctionTone, type SanctionType, type Lang } from "../lib/types";
+
+interface Props {
+  type: SanctionType;
+  active?: boolean;
+  lang?: Lang;
+}
+const { type, active = true, lang = "fr" } = Astro.props;
+
+const colorClass = {
+  error: "badge-error",
+  warning: "badge-warning",
+  neutral: "badge-neutral",
+  success: "badge-success",
+}[sanctionTone(type)];
+---
+
+<span class:list={["badge badge-lg font-semibold", active ? colorClass : "badge-ghost"]}>
+  {sanctionLabel(type, lang)}
+</span>

@@ -1,0 +1,46 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { useTranslations, basePath } from "../i18n/ui";
+import type { Lang } from "../lib/types";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const contactHref = `${basePath[lang]}/contact`;
+const altHref = lang === "fr" ? "/en/about" : "/a-propos";
+
+const sections = [
+  { heading: t("about.sourceHeading"), body: t("about.sourceBody") },
+  { heading: t("about.methodHeading"), body: t("about.methodBody") },
+  { heading: t("about.scopeHeading"), body: t("about.scopeBody") },
+  { heading: t("about.privacyHeading"), body: t("about.privacyBody") },
+  { heading: t("about.accuracyHeading"), body: t("about.accuracyBody") },
+];
+---
+
+<Layout title={t("about.title")} description={t("about.intro")} lang={lang} altHref={altHref}>
+  <div class="max-w-2xl mx-auto space-y-8">
+    <h1 class="text-3xl font-bold tracking-tight">{t("about.title")}</h1>
+    <p class="opacity-80">{t("about.intro")}</p>
+
+    {sections.map((s) => (
+      <section class="space-y-2">
+        <h2 class="text-xl font-semibold">{s.heading}</h2>
+        <p class="opacity-80">{s.body}</p>
+      </section>
+    ))}
+
+    <section class="space-y-2">
+      <h2 class="text-xl font-semibold">{t("about.correctionsHeading")}</h2>
+      <p class="opacity-80">{t("about.correctionsBody")}</p>
+      <a class="link font-medium" href={contactHref}>{t("about.correctionsCta")}</a>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-xl font-semibold">{t("about.independenceHeading")}</h2>
+      <p class="opacity-80">{t("about.independenceBody")}</p>
+    </section>
+  </div>
+</Layout>

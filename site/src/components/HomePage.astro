@@ -1,0 +1,294 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { doctors } from "../data/sample";
+import DoctorCard from "./DoctorCard.astro";
+import { statusFilterOf, sortDate, cardDisplay, specialtyOf, fullName, type StatusFilter, type Lang } from "../lib/types";
+import { useTranslations } from "../i18n/ui";
+import { siteConfig } from "../lib/config";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const sorted = [...doctors].sort((a, b) => sortDate(b).localeCompare(sortDate(a)));
+const recent = sorted.slice(0, siteConfig.recentLimit);
+
+// Display data for search result cards, keyed by page URL. Search matches only
+// name/permit/specialty/year (indexed on the detail pages); the card's city and
+// status come from here, so they are shown but never searched.
+const cardData = Object.fromEntries(
+  doctors.map((d) => {
+    const disp = cardDisplay(d, lang);
+    const url = (lang === "fr" ? "/medecin/" : "/en/doctor/") + d.slug + "/";
+    return [url, {
+      title: fullName(d),
+      permit: d.number,
+      specialty: specialtyOf(d, lang) ?? "",
+      city: d.city ?? "",
+      status: disp.label,
+      tone: disp.tone,
+      countLabel: disp.countLabel ?? "",
+      detail: disp.detail ?? "",
+    }];
+  }),
+);
+
+const statusCount = (f: StatusFilter) =>
+  doctors.filter((d) => statusFilterOf(d) === f).length;
+
+const listBase = lang === "fr" ? "/medecins" : "/en/doctors";
+const stats = [
+  { label: t("stats.doctors"), value: doctors.length, tone: "", href: `${listBase}/1` },
+  { label: t("status.radiated"), value: statusCount("radie"), tone: "text-error", href: `${listBase}/radie/1` },
+  { label: t("status.restricted"), value: statusCount("limite"), tone: "text-warning", href: `${listBase}/limite/1` },
+  { label: t("status.record"), value: statusCount("antecedent"), tone: "text-base-content/60", href: `${listBase}/antecedent/1` },
+];
+---
+
+<Layout title={t("home.title")} description={t("home.metaDescription")} lang={lang} altPath="/">
+  <section class="text-center space-y-4 mb-8">
+    <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">
+      {t("home.title")}
+    </h1>
+    <p class="opacity-70 max-w-2xl mx-auto">
+      {t("home.subtitle")}
+    </p>
+    <div class="max-w-xl mx-auto relative">
+      <input
+        id="q"
+        type="search"
+        placeholder={t("home.searchPlaceholder")}
+        autocomplete="off"
+        class="input input-bordered input-lg w-full shadow-sm pr-12 transition-colors hover:border-primary"
+      />
+      <button
+        id="q-clear"
+        type="button"
+        aria-label={t("home.searchClear")}
+        class="hidden absolute inset-y-0 right-0 flex items-center pr-4 text-base-content/50 hover:text-base-content transition-colors"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="w-5 h-5">
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </svg>
+      </button>
+    </div>
+  </section>
+
+  <div class="stats stats-vertical sm:stats-horizontal shadow w-full mb-8 bg-base-100">
+    {stats.map((s) => (
+      <a class="stat hover:ring-1 hover:ring-inset hover:ring-primary transition-all" href={s.href}>
+        <div class="stat-title">{s.label}</div>
+        <div class:list={["stat-value text-2xl", s.tone]}>{s.value}</div>
+      </a>
+    ))}
+  </div>
+
+  <div id="recent">
+  <h2 class="text-lg font-semibold mb-3">{t("home.recent")}</h2>
+  <ul id="results" class="grid gap-3">
+    {recent.map((d) => <DoctorCard doctor={d} lang={lang} />)}
+  </ul>
+  </div>
+
+  <section id="pf" class="hidden">
+    <h2 class="text-lg font-semibold mb-3">{t("home.results")}</h2>
+    <ul id="pf-results" class="grid gap-3"></ul>
+  </section>
+  <div id="pf-loading" class="hidden py-8 text-center opacity-70" role="status" aria-live="polite">
+    <span class="loading loading-spinner loading-md align-middle"></span>
+    <span class="ml-2 align-middle">{t("home.searching")}</span>
+  </div>
+  <p id="empty" class="text-center opacity-70 py-8 hidden">{t("home.empty")}</p>
+  <script type="application/json" id="card-data" set:html={JSON.stringify(cardData)}></script>
+</Layout>
+
+<script is:inline>
+  (function () {
+    const q = document.getElementById("q");
+    const clearBtn = document.getElementById("q-clear");
+    const recent = document.getElementById("recent");
+    const pf = document.getElementById("pf");
+    const list = document.getElementById("pf-results");
+    const empty = document.getElementById("empty");
+    const loading = document.getElementById("pf-loading");
+    if (!q) return;
+
+    let CARD = {};
+    try {
+      CARD = JSON.parse(document.getElementById("card-data").textContent);
+    } catch (e) {}
+
+    function syncClear() {
+      if (clearBtn) clearBtn.classList.toggle("hidden", q.value.length === 0);
+    }
+    if (clearBtn) {
+      clearBtn.addEventListener("click", () => {
+        q.value = "";
+        syncClear();
+        q.focus();
+        run();
+      });
+    }
+
+    const PIN =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="w-4 h-4 shrink-0 opacity-70"><path d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M19.5 10.5c0 7.5-7.5 12-7.5 12s-7.5-4.5-7.5-12a7.5 7.5 0 1115 0z"/></svg>';
+    const STETH =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="w-4 h-4 shrink-0 opacity-70"><path d="M6 4h-1a2 2 0 0 0-2 2v3.5a5.5 5.5 0 0 0 11 0V6a2 2 0 0 0-2-2h-1"/><path d="M8 15a6 6 0 1 0 12 0v-3"/><path d="M11 3v2"/><path d="M6 3v2"/><circle cx="20" cy="10" r="2"/></svg>';
+
+    let engine = null;
+    async function getEngine() {
+      if (!engine) {
+        const path = "/pagefind/pagefind.js";
+        engine = await import(path);
+        if (engine.init) await engine.init();
+      }
+      return engine;
+    }
+
+    // Warm up the search engine ahead of time so the first query feels instant.
+    q.addEventListener("focus", () => { getEngine().catch(() => {}); }, { once: true });
+    if ("requestIdleCallback" in window) {
+      requestIdleCallback(() => { getEngine().catch(() => {}); });
+    } else {
+      setTimeout(() => { getEngine().catch(() => {}); }, 1500);
+    }
+
+    const esc = (s) =>
+      (s || "").replace(/[&<>"']/g, (c) =>
+        ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+    const toneBadge = {
+      error: "badge-error",
+      warning: "badge-warning",
+      neutral: "badge-ghost",
+      success: "badge-success",
+    };
+
+    function card(d) {
+      const m = CARD[d.url] || {};
+      const badge = toneBadge[m.tone] || "badge-ghost";
+      const detail = m.detail || "";
+      const countLabel = m.countLabel || "";
+      return (
+        '<li><a href="' + d.url +
+        '" class="card card-compact bg-base-100 border border-base-300 hover:border-primary hover:shadow-md transition-all shadow-sm">' +
+        '<div class="card-body flex-row items-start justify-between gap-4">' +
+        '<div class="min-w-0">' +
+        '<div class="text-lg font-semibold flex items-baseline gap-2 min-w-0">' +
+        '<span class="truncate">' + esc(m.title) + "</span>" +
+        '<span class="text-sm font-normal opacity-70 shrink-0">' + esc(m.permit || "") + "</span></div>" +
+        (m.specialty ? '<div class="text-sm opacity-70 flex items-center gap-1.5">' + STETH + '<span class="truncate">' + esc(m.specialty) + "</span></div>" : "") +
+        (m.city ? '<div class="text-sm opacity-70 flex items-center gap-1.5">' + PIN + '<span class="truncate">' + esc(m.city) + "</span></div>" : "") +
+        "</div>" +
+        '<div class="text-right shrink-0" style="max-width:45%">' +
+        '<span class="badge badge-lg font-medium ' + badge + '">' + esc(m.status) + "</span>" +
+        (countLabel ? '<div class="mt-1"><span class="badge badge-sm font-medium ' + badge + '">' + esc(countLabel) + "</span></div>" : "") +
+        (detail ? '<div class="text-xs opacity-70 mt-1">' + esc(detail) + "</div>" : "") +
+        "</div>" +
+        "</div></a></li>"
+      );
+    }
+
+    let timer;
+    q.addEventListener("input", () => {
+      syncClear();
+      clearTimeout(timer);
+      timer = setTimeout(run, 120);
+    });
+
+    // Loading-indicator timing (standard anti-flicker pattern): only show the
+    // spinner if the search is still running after SHOW_DELAY, and once shown
+    // keep it up for at least MIN_VISIBLE so it never flashes.
+    const SHOW_DELAY = 250;
+    const MIN_VISIBLE = 500;
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+    let spinTimer = null;
+    let spinShownAt = 0;
+    let spinVisible = false;
+    let pfLeaveTimer = null;
+    let recentLeaveTimer = null;
+
+    function scheduleSpinner() {
+      clearTimeout(spinTimer);
+      spinTimer = setTimeout(() => {
+        if (!loading) return;
+        loading.classList.remove("hidden");
+        spinVisible = true;
+        spinShownAt = performance.now();
+      }, SHOW_DELAY);
+    }
+    async function clearSpinner() {
+      clearTimeout(spinTimer);
+      if (spinVisible) {
+        const elapsed = performance.now() - spinShownAt;
+        if (elapsed < MIN_VISIBLE) await sleep(MIN_VISIBLE - elapsed);
+        loading && loading.classList.add("hidden");
+        spinVisible = false;
+      }
+    }
+
+    function fadeOutRecent() {
+      if (!recent || recent.classList.contains("hidden")) return;
+      recent.classList.remove("pf-enter");
+      recent.classList.add("pf-leaving");
+      clearTimeout(recentLeaveTimer);
+      recentLeaveTimer = setTimeout(() => {
+        recent.classList.add("hidden");
+        recent.classList.remove("pf-leaving");
+      }, 180);
+    }
+    function showRecent() {
+      if (!recent) return;
+      clearTimeout(recentLeaveTimer);
+      recent.classList.remove("hidden", "pf-leaving");
+      // Re-trigger the enter animation.
+      recent.classList.remove("pf-enter");
+      void recent.offsetWidth;
+      recent.classList.add("pf-enter");
+    }
+
+    async function run() {
+      const term = q.value.trim();
+      if (!term) {
+        clearTimeout(spinTimer);
+        await clearSpinner();
+        if (q.value.trim() !== "") return; // a new query started meanwhile
+        if (pf) {
+          pf.classList.add("pf-leaving");
+          clearTimeout(pfLeaveTimer);
+          pfLeaveTimer = setTimeout(() => {
+            pf.classList.add("hidden");
+            pf.classList.remove("pf-leaving");
+            if (list) list.innerHTML = "";
+          }, 180);
+        }
+        empty && empty.classList.add("hidden");
+        showRecent();
+        return;
+      }
+      fadeOutRecent();
+      scheduleSpinner();
+      try {
+        const e = await getEngine();
+        const search = await e.search(term);
+        const results = await Promise.all(
+          search.results.slice(0, 25).map((r) => r.data()),
+        );
+        // A newer keystroke may have superseded this query while we awaited.
+        if (q.value.trim() !== term) return;
+        await clearSpinner();
+        if (q.value.trim() !== term) return;
+        clearTimeout(pfLeaveTimer);
+        if (list) list.innerHTML = results.map(card).join("");
+        pf && pf.classList.remove("hidden", "pf-leaving");
+        empty && empty.classList.toggle("hidden", results.length > 0);
+      } catch (err) {
+        console.error("Pagefind search failed", err);
+        if (q.value.trim() === term) await clearSpinner();
+      }
+    }
+  })();
+</script>

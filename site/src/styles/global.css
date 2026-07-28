@@ -1,0 +1,146 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "daisyui" {
+  themes: corporate --default, business --prefersdark;
+}
+
+/* Keep the crisp corporate palette; just soften the corners slightly. */
+[data-theme="corporate"] {
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.75rem;
+}
+
+/* Verbatim official notice text: preserve line breaks from the source. */
+.notice-prose {
+  white-space: pre-line;
+}
+
+/* daisyUI's default stat title is a touch light for AA; darken it slightly. */
+.stat-title {
+  color: var(--color-base-content);
+  opacity: 0.72;
+}
+
+/* Subtle but clearly visible divider between stat cells (matches card borders).
+   daisyUI defaults the divider to a dashed style, which reads as "pixelated" at
+   1px; use a clean solid hairline instead. daisyUI also keeps both a right and a
+   bottom border on each cell, so show only the one that matches the layout
+   direction (right when horizontal, bottom when stacked) to keep edges even. */
+.stats > .stat {
+  border-color: var(--color-base-300);
+  border-style: solid;
+}
+@media (width >= 40rem) {
+  .stats > .stat {
+    border-block-width: 0;
+  }
+}
+@media (width < 40rem) {
+  .stats > .stat {
+    border-inline-width: 0;
+  }
+}
+
+/* The hover outline should echo the panel: rounded where it meets the panel's
+   outer corners, sharp where it meets a divider. Middle cells stay fully sharp;
+   only the first/last cell rounds its outer-facing corners (which flip between
+   left/right when horizontal and top/bottom when stacked). */
+.stats > .stat:hover {
+  border-radius: 0;
+}
+@media (width >= 40rem) {
+  .stats > .stat:first-child:hover {
+    border-start-start-radius: var(--radius-box);
+    border-end-start-radius: var(--radius-box);
+  }
+  .stats > .stat:last-child:hover {
+    border-start-end-radius: var(--radius-box);
+    border-end-end-radius: var(--radius-box);
+  }
+}
+@media (width < 40rem) {
+  .stats > .stat:first-child:hover {
+    border-start-start-radius: var(--radius-box);
+    border-start-end-radius: var(--radius-box);
+  }
+  .stats > .stat:last-child:hover {
+    border-end-start-radius: var(--radius-box);
+    border-end-end-radius: var(--radius-box);
+  }
+}
+
+/* Cleaner input focus: a tight ring flush to the border, no offset gap. */
+.input:focus,
+.input:focus-within {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px color-mix(in oklch, var(--color-primary) 22%, transparent);
+}
+
+/* Text links get a clear hover affordance (color shift + underline). */
+.link:hover {
+  color: var(--color-primary);
+  text-decoration-line: underline;
+}
+
+/* Hide the browser's native search "clear" button; its default styling looks out of place. */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* --- Search UX motion --------------------------------------------------- */
+
+/* Results fade and lift in as they render, with a short staggered cascade for
+   the first few so a fresh result set feels smooth rather than snapping in. */
+@keyframes pf-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+#pf-results > li {
+  animation: pf-fade-in 0.22s ease-out both;
+}
+#pf-results > li:nth-child(2) { animation-delay: 0.03s; }
+#pf-results > li:nth-child(3) { animation-delay: 0.06s; }
+#pf-results > li:nth-child(4) { animation-delay: 0.09s; }
+#pf-results > li:nth-child(5) { animation-delay: 0.12s; }
+#pf-results > li:nth-child(n + 6) { animation-delay: 0.15s; }
+
+/* The loading indicator and the recent/empty blocks ease in the same way. */
+#pf-loading:not(.hidden),
+#recent.pf-enter,
+#empty:not(.hidden) {
+  animation: pf-fade-in 0.2s ease-out both;
+}
+
+/* A gentle fade-out when a block leaves (results cleared, or swapped for
+   another state). Driven by the .pf-leaving class the search script toggles. */
+#pf,
+#recent {
+  transition: opacity 0.18s ease;
+}
+.pf-leaving {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #pf-results > li,
+  #pf-loading:not(.hidden),
+  #recent.pf-enter,
+  #empty:not(.hidden) {
+    animation: none;
+  }
+  #pf,
+  #recent {
+    transition: none;
+  }
+}
+

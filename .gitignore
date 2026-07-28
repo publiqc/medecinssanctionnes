@@ -1,0 +1,17 @@
+# Collected data (large / private; regenerate by running the collector).
+# The raw full registry (physicians.jsonl), PDF cache, checkpoints and logs stay
+# out of git. The minimized, publishable working state the site build needs is
+# tracked (no contact PII — see collect.minimize_detail).
+/data/*
+!/data/disciplined.jsonl
+!/data/notices_ledger.jsonl
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Editor
+.vscode/
+.idea/

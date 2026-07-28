@@ -1,0 +1,15 @@
+---
+import ListingPage from "../../components/ListingPage.astro";
+import { doctors } from "../../data/sample";
+import { siteConfig } from "../../lib/config";
+import { sortDate } from "../../lib/types";
+
+export function getStaticPaths({ paginate }) {
+  const sorted = [...doctors].sort((a, b) => sortDate(b).localeCompare(sortDate(a)));
+  return paginate(sorted, { pageSize: siteConfig.listPageSize });
+}
+
+const { page } = Astro.props;
+---
+
+<ListingPage lang="fr" page={page} />

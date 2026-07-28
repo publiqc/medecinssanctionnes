@@ -1,0 +1,7 @@
+# Collector runtime dependencies (Python 3.12).
+# The collector itself uses only the standard library; these are for the
+# Stage 2 decision-PDF text extraction.
+
+# High-fidelity PDF text extraction (Google PDFium). Apache-2.0 / BSD-3-Clause,
+# so it is compatible with a permissive project license (MIT / Apache-2.0).
+pypdfium2>=4

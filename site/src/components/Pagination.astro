@@ -1,0 +1,27 @@
+---
+import { useTranslations } from "../i18n/ui";
+import type { Lang } from "../lib/types";
+
+interface Props {
+  page: {
+    currentPage: number;
+    lastPage: number;
+    url: { prev?: string; next?: string };
+  };
+  lang: Lang;
+}
+const { page, lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+{page.lastPage > 1 && (
+  <nav class="flex items-center justify-center gap-4 mt-8" aria-label="Pagination">
+    {page.url.prev
+      ? <a class="btn btn-sm btn-ghost" href={page.url.prev}>{t("pagination.prev")}</a>
+      : <span class="btn btn-sm btn-ghost btn-disabled" aria-disabled="true">{t("pagination.prev")}</span>}
+    <span class="text-sm opacity-70">{t("pagination.page")} {page.currentPage} {t("pagination.of")} {page.lastPage}</span>
+    {page.url.next
+      ? <a class="btn btn-sm btn-ghost" href={page.url.next}>{t("pagination.next")}</a>
+      : <span class="btn btn-sm btn-ghost btn-disabled" aria-disabled="true">{t("pagination.next")}</span>}
+  </nav>
+)}

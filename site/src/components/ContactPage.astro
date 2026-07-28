@@ -1,0 +1,42 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { useTranslations } from "../i18n/ui";
+import { siteConfig } from "../lib/config";
+import type { Lang } from "../lib/types";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const contactEmail = siteConfig.contactEmail[lang];
+---
+
+<Layout title={t("contact.title")} description={t("contact.intro")} lang={lang} altPath="/contact">
+  <div class="max-w-2xl mx-auto space-y-8">
+    <h1 class="text-3xl font-bold tracking-tight">{t("contact.title")}</h1>
+    <p class="opacity-80">{t("contact.intro")}</p>
+
+    <section class="space-y-2">
+      <h2 class="text-xl font-semibold">{t("contact.errorHeading")}</h2>
+      <p class="opacity-80">{t("contact.errorBody")}</p>
+      <a class="link font-medium" href={`mailto:${contactEmail}`}>{contactEmail}</a>
+    </section>
+
+    {siteConfig.githubUrl && (
+      <section class="space-y-2">
+        <h2 class="text-xl font-semibold">{t("contact.sourceHeading")}</h2>
+        <p class="opacity-80">{t("contact.sourceBody")}</p>
+        <a class="link font-medium" href={siteConfig.githubUrl} rel="noopener" target="_blank">{t("contact.sourceCta")}</a>
+      </section>
+    )}
+
+    {siteConfig.githubIssuesUrl && (
+      <section class="space-y-2">
+        <h2 class="text-xl font-semibold">{t("contact.feedbackHeading")}</h2>
+        <p class="opacity-80">{t("contact.feedbackBody")}</p>
+        <a class="link font-medium" href={siteConfig.githubIssuesUrl} rel="noopener" target="_blank">{t("contact.feedbackCta")}</a>
+      </section>
+    )}
+  </div>
+</Layout>
