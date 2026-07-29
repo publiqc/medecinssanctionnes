@@ -28,6 +28,8 @@ const switchHref = altHref ?? (`${otherBase}${altPath}` || "/");
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#e11d48" />
     {siteConfig.previewNoindex && <meta name="robots" content="noindex" />}
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
