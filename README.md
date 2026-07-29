@@ -19,6 +19,8 @@ _Quebec physicians who have been the subject of a disciplinary sanction, gathere
 
 ---
 
+<br />
+
 ![Français](https://img.shields.io/badge/-Fran%C3%A7ais-475569?style=for-the-badge)
 
 Un site public et bilingue qui réunit, en un seul endroit facile à consulter, les médecins du Québec ayant fait l'objet d'une sanction disciplinaire. Toute l'information provient des registres publics du Collège des médecins du Québec.
@@ -38,6 +40,8 @@ Un site public et bilingue qui réunit, en un seul endroit facile à consulter, 
 **Mise à jour.** Le site se met à jour tout seul chaque semaine à partir des avis publiés par le Collège (radiation, limitation, suspension, révocation de permis). Comme une sanction temporaire peut déjà avoir été purgée, consultez toujours le bottin officiel du Collège pour le statut actuel d'un médecin.
 
 ---
+
+<br />
 
 ![English](https://img.shields.io/badge/-English-475569?style=for-the-badge)
 
