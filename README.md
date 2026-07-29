@@ -19,7 +19,7 @@ _Quebec physicians who have been the subject of a disciplinary sanction, gathere
 
 ---
 
-## Français
+![Français](https://img.shields.io/badge/-Fran%C3%A7ais-475569?style=for-the-badge)
 
 Un site public et bilingue qui réunit, en un seul endroit facile à consulter, les médecins du Québec ayant fait l'objet d'une sanction disciplinaire. Toute l'information provient des registres publics du Collège des médecins du Québec.
 
@@ -39,7 +39,7 @@ Un site public et bilingue qui réunit, en un seul endroit facile à consulter, 
 
 ---
 
-## English
+![English](https://img.shields.io/badge/-English-475569?style=for-the-badge)
 
 A public, bilingual website that brings together, in one place that is easy to search, the Quebec physicians who have been the subject of a disciplinary sanction. All of the information comes from the public registries of the Collège des médecins du Québec.
 
