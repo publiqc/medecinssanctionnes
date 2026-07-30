@@ -29,7 +29,7 @@ const switchHref = altHref ?? (`${otherBase}${altPath}` || "/");
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="theme-color" content="#e11d48" />
+    <meta name="theme-color" content="#095797" />
     {siteConfig.previewNoindex && <meta name="robots" content="noindex" />}
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
@@ -39,7 +39,7 @@ const switchHref = altHref ?? (`${otherBase}${altPath}` || "/");
     <header class="navbar bg-base-100 border-b border-base-300 px-4 sm:px-8">
       <div class="flex-1">
         <a href={home} class="text-lg font-bold tracking-tight inline-flex items-center gap-2">
-          <span class="inline-block w-2.5 h-2.5 rounded-full bg-error"></span>
+          <img src="/favicon.svg" alt="" width="36" height="36" class="w-9 h-9" />
           {t("site.brand")}
         </a>
       </div>
