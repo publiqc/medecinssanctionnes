@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="site/public/favicon.svg" alt="Médecins sanctionnés logo" width="96" height="96" />
+
 # Médecins sanctionnés &nbsp;·&nbsp; Sanctioned Doctors
 
 **Les médecins du Québec ayant fait l'objet d'une sanction disciplinaire, réunis en un seul endroit.**  
