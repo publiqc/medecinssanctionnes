@@ -48,6 +48,19 @@ npm run preview    # serve dist/ locally to verify the production build
 committed to the repo, so the site runs without regenerating anything. To rebuild
 the dataset, see [collector/README.md](../collector/README.md).
 
+### One rule to keep in sync
+
+`statusOf()` in [src/lib/types.ts](src/lib/types.ts) decides the headline status
+shown on a doctor's page (currently struck off, restricted practice, sanction
+already served, disciplinary record). It is a **mirror of `status_kind()` in
+`normalize.py`** — if you change one, change the other, or the page will
+contradict the dataset.
+
+That status comes only from the sanctions the CMQ registry reports as active. A
+published notice never makes a doctor "currently struck off" on its own, because
+the CMQ never retracts a notice once a sanction has been served. See
+[collector/README.md](../collector/README.md) for the reasoning.
+
 ## Common scripts
 
 | Command | Description |

@@ -39,7 +39,7 @@ Un site public et bilingue qui réunit, en un seul endroit facile à consulter, 
 
 **Vie privée.** Nous n'affichons que la ville d'exercice. Aucune adresse ni aucun numéro de téléphone n'est publié, et les ordonnances de non-publication qui protègent l'identité des patients sont respectées.
 
-**Mise à jour.** Le site se met à jour tout seul chaque semaine à partir des avis publiés par le Collège (radiation, limitation, suspension, révocation de permis). Comme une sanction temporaire peut déjà avoir été purgée, consultez toujours le bottin officiel du Collège pour le statut actuel d'un médecin.
+**Mise à jour.** Le site se met à jour tout seul chaque semaine à partir des avis publiés par le Collège (radiation, limitation, suspension, révocation de permis). Un avis annonce le début d'une sanction, mais rien n'est publié lorsqu'elle prend fin : chaque semaine, nous revérifions donc au bottin officiel tous les médecins que nous présentons comme sanctionnés. Le bottin du Collège fait toujours foi du statut actuel, et c'est lui seul qui détermine si nous écrivons « actuellement radié » ou « sanction déjà purgée ». En cas de doute, consultez-le directement.
 
 ---
 
@@ -61,7 +61,7 @@ A public, bilingual website that brings together, in one place that is easy to s
 
 **Privacy.** We show only the practice city. No address or phone number is published, and non-publication orders that protect patients' identities are respected.
 
-**Updates.** The site updates itself every week from the notices published by the Collège (striking off, practice restriction, suspension, licence revocation). Because a temporary sanction may already have been served, always consult the Collège's official directory for a physician's current status.
+**Updates.** The site updates itself every week from the notices published by the Collège (striking off, practice restriction, suspension, licence revocation). A notice announces the start of a sanction, but nothing is published when one ends, so every week we re-check every physician we show as sanctioned against the official directory. The Collège's directory is always the authority on current status, and it alone decides whether we write “currently struck off” or “sanction already served”. When in doubt, consult it directly.
 
 ---
 

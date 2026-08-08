@@ -148,7 +148,14 @@ const STATUS_LABELS = {
   clean: { fr: "Aucune sanction active", en: "No active sanction" },
 };
 
-/** Derive the headline status for a doctor from their sanctions. */
+/**
+ * Derive the headline status for a doctor from their sanctions.
+ *
+ * Only the CMQ registry says who is *currently* sanctioned. A published avis is a
+ * one-off announcement that a sanction was imposed and is never retracted, and the
+ * feed only covers a rolling ~3 months, so it can neither prove a sanction is still
+ * in force nor list everyone who is. Avis therefore inform history, not current status.
+ */
 export function statusOf(doctor: Doctor, lang: Lang = "fr"): StatusInfo {
   const active = doctor.sanctions.filter((s) => s.active);
   if (active.some((s) => s.type === "radiation" || s.type === "revocation")) {
@@ -160,18 +167,8 @@ export function statusOf(doctor: Doctor, lang: Lang = "fr"): StatusInfo {
   if (active.some((s) => s.type === "limitation" || s.type === "commitment")) {
     return { kind: "restricted", label: STATUS_LABELS.restricted[lang], tone: "warning" };
   }
-  // A published CMQ avis is authoritative even when the registry hasn't caught up.
-  const notices = doctor.notices ?? [];
-  if (notices.some((n) => n.type === "radiation" || n.type === "revocation")) {
-    return { kind: "radiated", label: STATUS_LABELS.radiatedRadiation[lang], tone: "error" };
-  }
-  if (notices.some((n) => n.type === "suspension")) {
-    return { kind: "radiated", label: STATUS_LABELS.radiatedSuspension[lang], tone: "error" };
-  }
-  if (notices.some((n) => n.type === "limitation")) {
-    return { kind: "restricted", label: STATUS_LABELS.restricted[lang], tone: "warning" };
-  }
-  if (doctor.sanctions.length > 0) {
+  // An avis with nothing active left on the registry means the sanction was served.
+  if (doctor.sanctions.length > 0 || (doctor.notices?.length ?? 0) > 0) {
     return { kind: "past", label: STATUS_LABELS.past[lang], tone: "neutral" };
   }
   if ((doctor.decisions?.length ?? 0) > 0 || doctor.caseCount > 0) {

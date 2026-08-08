@@ -54,6 +54,12 @@ jobs:
         working-directory: collector
         run: python refresh.py --rate 2
 
+      # Gate: runs before the commit, so a false accusation fails the job
+      # instead of being published.
+      - name: Verify published status against the registry
+        working-directory: collector
+        run: python verify_status.py
+
       - name: Commit refreshed data
         run: |
           git config user.name "sanctions-bot"

@@ -2,13 +2,17 @@
 
 Cheap by design: instead of re-scanning the ~44k-physician registry, we read the
 disciplinary avis feeds (getNoticeListing — a rolling ~3-month "what's new"
-stream) and touch only the doctors named in a fresh avis. The avis is published
-the moment a sanction takes effect, so this catches new sanctions the same week.
+stream) to learn who to look at. The avis is published the moment a sanction takes
+effect, so this catches new sanctions the same week. Nothing is published when a
+sanction ends, though, so we also re-check every doctor we currently show as
+sanctioned — otherwise an accusation could never be withdrawn.
 
 Pipeline:
   1. Merge the disciplinary avis feeds into data/notices_ledger.jsonl.
-  2. For every physicianId in the ledger, (re)fetch the full record and upsert
-     it into data/disciplined.jsonl (by physicianId).
+  2. (Re)fetch and upsert into data/disciplined.jsonl, by physicianId:
+       - every doctor named in the avis ledger (catches NEW sanctions), and
+       - every doctor we currently show as sanctioned (catches LIFTED ones — no
+         avis is ever published when a sanction ends, so this is the only signal).
   3. Fetch any newly-referenced decision PDFs (fetch_decisions.py, idempotent).
   4. Normalize -> site/src/data/doctors.json.
   5. Write a change summary (added / status-changed doctors) to
@@ -20,6 +24,7 @@ Usage:
   python refresh.py                # full incremental refresh
   python refresh.py --rate 2       # cap physician fetches to 2/s (default)
   python refresh.py --skip-fetch   # rebuild + diff only, no API calls
+  python refresh.py --no-verify    # avis ledger only (skip the re-verification pass)
 """
 from __future__ import annotations
 
@@ -48,6 +53,34 @@ def ledger_physician_ids() -> list[int]:
     for rec in fetch_notices.load_ledger().values():
         pid = rec.get("physicianId")
         if isinstance(pid, int) and pid not in seen:
+            seen.add(pid)
+            ids.append(pid)
+    return ids
+
+
+def accused_physician_ids() -> list[int]:
+    """physicianIds we currently present as being under an active sanction.
+
+    The avis feed announces sanctions being imposed, but nothing is ever published
+    when one is lifted or served. So the feed alone can only ever add accusations —
+    re-checking everyone we currently accuse against the registry is what lets us
+    withdraw one.
+    """
+    if not DOCTORS.exists() or not DISCIPLINED.exists():
+        return []
+    accused = {str(d.get("number") or "").strip()
+               for d in json.loads(DOCTORS.read_text(encoding="utf-8"))
+               if d.get("statusKind") in ("radiated", "restricted")}
+    ids: list[int] = []
+    seen: set[int] = set()
+    for line in DISCIPLINED.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        rec = json.loads(line)
+        pid = rec.get("physicianId")
+        if (str(rec.get("number") or "").strip() in accused
+                and isinstance(pid, int) and pid not in seen):
             seen.add(pid)
             ids.append(pid)
     return ids
@@ -94,15 +127,16 @@ def upsert_disciplined(by_pid: dict[int, dict]) -> None:
             fh.write(json.dumps(existing[pid], ensure_ascii=False) + "\n")
 
 
-def status_snapshot() -> dict[str, str]:
-    """Map permit number -> statusKind from the current doctors.json."""
+def status_snapshot() -> dict[str, dict]:
+    """Map permit number -> {kind, name} from the current doctors.json."""
     if not DOCTORS.exists():
         return {}
-    out: dict[str, str] = {}
+    out: dict[str, dict] = {}
     for d in json.loads(DOCTORS.read_text(encoding="utf-8")):
         num = str(d.get("number") or "").strip()
         if num:
-            out[num] = d.get("statusKind") or "record"
+            out[num] = {"kind": d.get("statusKind") or "record",
+                        "name": f"{d.get('lastName', '')}, {d.get('firstName', '')}"}
     return out
 
 
@@ -129,19 +163,21 @@ CATEGORY_LABELS = {
 
 
 def _summary_section(lang: str, new_notices: list[dict], added: list[dict],
-                     changed: list[dict]) -> list[str]:
+                     changed: list[dict], removed: list[dict]) -> list[str]:
     tr = {
         "fr": {"none": "Aucun changement cette semaine.",
                "notices": "Nouveaux avis", "added": "Médecins ajoutés",
-               "changed": "Changements de statut", "permit": "permis"},
+               "changed": "Changements de statut", "permit": "permis",
+               "removed": "Médecins retirés (plus aucune sanction au tableau)"},
         "en": {"none": "No changes this week.",
                "notices": "New notices", "added": "Doctors added",
-               "changed": "Status changes", "permit": "permit"},
+               "changed": "Status changes", "permit": "permit",
+               "removed": "Doctors removed (no sanction left on the register)"},
     }[lang]
     status = STATUS_LABELS[lang]
     cats = CATEGORY_LABELS[lang]
     out: list[str] = []
-    if not (new_notices or added or changed):
+    if not (new_notices or added or changed or removed):
         out.append(tr["none"])
         return out
     if new_notices:
@@ -164,17 +200,23 @@ def _summary_section(lang: str, new_notices: list[dict], added: list[dict],
             new = status.get(d["new"], d["new"])
             out.append(f"- {d['name']} ({tr['permit']} {d['number']}) : {old} → {new}")
         out.append("")
+    if removed:
+        out.append(f"### {tr['removed']} ({len(removed)})")
+        for d in removed:
+            out.append(f"- {d['name']} ({tr['permit']} {d['number']}) : "
+                       f"{status.get(d['old'], d['old'])} → —")
+        out.append("")
     return out
 
 
 def write_summary(new_notices: list[dict], added: list[dict],
-                  changed: list[dict]) -> None:
+                  changed: list[dict], removed: list[dict]) -> None:
     lines = ["# Mise à jour hebdomadaire des sanctions / Weekly sanctions update", ""]
     lines.append("## Français")
-    lines += _summary_section("fr", new_notices, added, changed)
+    lines += _summary_section("fr", new_notices, added, changed, removed)
     lines.append("")
     lines.append("## English")
-    lines += _summary_section("en", new_notices, added, changed)
+    lines += _summary_section("en", new_notices, added, changed, removed)
     SUMMARY.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"\nwrote {SUMMARY}")
 
@@ -185,6 +227,9 @@ def main() -> None:
                     help="max physician fetches per second (default 2)")
     ap.add_argument("--skip-fetch", action="store_true",
                     help="rebuild + diff only, no CMQ API calls")
+    ap.add_argument("--no-verify", action="store_true",
+                    help="only refresh doctors named in the avis ledger; skip re-checking "
+                         "everyone currently shown as sanctioned")
     args = ap.parse_args()
 
     before = status_snapshot()
@@ -195,7 +240,13 @@ def main() -> None:
         print(f"ledger: {total} notices (+{len(new_notices)} new)")
 
         pids = ledger_physician_ids()
-        print(f"refreshing {len(pids)} physicianIds from the avis ledger")
+        from_ledger = len(pids)
+        if not args.no_verify:
+            seen = set(pids)
+            pids += [p for p in accused_physician_ids() if p not in seen]
+        print(f"refreshing {len(pids)} physicianIds "
+              f"({from_ledger} from the avis ledger, "
+              f"{len(pids) - from_ledger} re-verified as currently sanctioned)")
         by_pid: dict[int, dict] = {}
         delay = 1.0 / args.rate if args.rate > 0 else 0.0
         for i, pid in enumerate(pids, 1):
@@ -229,17 +280,23 @@ def main() -> None:
     added = [{"number": n, "name": name_of[n], "statusKind": d.get("statusKind")}
              for n, d in after.items() if n not in before]
     changed = [{"number": n, "name": name_of[n],
-                "old": before[n], "new": d.get("statusKind")}
+                "old": before[n]["kind"], "new": d.get("statusKind")}
                for n, d in after.items()
-               if n in before and before[n] != (d.get("statusKind") or "record")]
+               if n in before and before[n]["kind"] != (d.get("statusKind") or "record")]
+    # Dropping out means the last sanction came off the register — the change we most
+    # need to publish, since it is us withdrawing an accusation.
+    removed = [{"number": n, "name": b["name"], "old": b["kind"]}
+               for n, b in before.items() if n not in after]
 
-    print(f"\nadded: {len(added)}   status-changed: {len(changed)}")
+    print(f"\nadded: {len(added)}   status-changed: {len(changed)}   removed: {len(removed)}")
     for d in added:
         print(f"  + {d['name']} ({d['number']}) {d['statusKind']}")
     for d in changed:
         print(f"  ~ {d['name']} ({d['number']}) {d['old']} -> {d['new']}")
+    for d in removed:
+        print(f"  - {d['name']} ({d['number']}) {d['old']} -> no longer listed")
 
-    write_summary(new_notices, added, changed)
+    write_summary(new_notices, added, changed, removed)
 
 
 if __name__ == "__main__":

@@ -45,11 +45,17 @@ SPECIALTY_MAP: dict[str, str] = (
 # physician-details API reflects it — so they're an authoritative inclusion and
 # status signal. Built by fetch_notices.py.
 _NOTICES_PATH = ROOT / "data" / "notices_ledger.jsonl"
-# avis category label -> sanction type / headline status kind.
+# avis category label -> sanction type.
 NOTICE_TYPE = {"radiation": "radiation", "suspension": "suspension",
                "revocation": "revocation", "limitation": "limitation"}
-NOTICE_KIND = {"radiation": "radiated", "suspension": "radiated",
-               "revocation": "radiated", "limitation": "restricted"}
+# An avis is a one-off publication, never retracted, and the feed is a rolling ~3-month
+# "what's new" stream — NOT a current-state list (measured 2026-08-08: 13 live hard avis
+# vs 101 doctors the registry reports as actively radiated, some since 1969). So an avis
+# proves a sanction was IMPOSED, never that it is still IN FORCE. Current status comes
+# from the registry (getPhysicianDetails) alone; avis drive inclusion and history.
+HARD_NOTICE_TYPES = ("radiation", "revocation", "suspension")
+# Window used only to keep the build-time conflict report actionable.
+NOTICE_CONFLICT_DAYS = 90
 
 
 def _load_notices() -> dict[str, list[dict]]:
@@ -563,14 +569,15 @@ def doctor_notices(number: str) -> list[dict]:
     return out
 
 
-def notice_status_kind(notices: list[dict]) -> str | None:
-    """Headline status implied by a doctor's published avis (radiated > restricted)."""
-    kinds = {NOTICE_KIND.get(n["type"]) for n in notices}
-    if "radiated" in kinds:
-        return "radiated"
-    if "restricted" in kinds:
-        return "restricted"
-    return None
+def notice_age_days(notice: dict) -> int | None:
+    d = iso(notice.get("date"))
+    if not d:
+        return None
+    try:
+        y, m, day = (int(x) for x in d.split("-"))
+    except ValueError:
+        return None
+    return (TODAY - date(y, m, day)).days
 
 
 def normalize_record(record: dict) -> dict | None:
@@ -624,13 +631,13 @@ def normalize_record(record: dict) -> dict | None:
     sanctions.sort(key=lambda s: s.get("date") or "", reverse=True)
 
     specialty = (record.get("specialtyName") or "").strip() or None
-    notice_kind = notice_status_kind(notices)
-    status_k = status_kind(sanctions, has_finding=True, notice_kind=notice_kind)
-    # A radiation found in a decision's disposition, when the doctor isn't
-    # currently struck off, means a served (past) radiation the registry dropped.
+    status_k = status_kind(sanctions, has_finding=True, notices=notices)
+    # A radiation found in a decision's disposition or a published avis, when the
+    # doctor isn't currently struck off, means a served (past) radiation.
     dispo_kinds = {k for dec in decisions for k in dec.get("dispositionKinds", [])}
     formerly_struck = (
-        ("radiation" in dispo_kinds or "revocation" in dispo_kinds)
+        ("radiation" in dispo_kinds or "revocation" in dispo_kinds
+         or any(n["type"] in ("radiation", "revocation") for n in notices))
         and status_k != "radiated"
     )
     doc = {
@@ -667,21 +674,44 @@ def primary_type(sanctions: list[dict]) -> str | None:
 
 
 def status_kind(sanctions: list[dict], has_finding: bool = False,
-                notice_kind: str | None = None) -> str:
+                notices: list[dict] | None = None) -> str:
     """Mirror the site's statusOf(): headline status from the active sanctions."""
     active = [s for s in sanctions if s.get("active")]
     if any(s["type"] in ("radiation", "revocation", "suspension") for s in active):
         return "radiated"
     if any(s["type"] in ("limitation", "commitment") for s in active):
         return "restricted"
-    # A published CMQ avis is authoritative even when the registry hasn't caught up.
-    if notice_kind:
-        return notice_kind
-    if sanctions:
+    # An avis evidences a sanction that was imposed; with nothing active left on the
+    # registry, it has been served.
+    if sanctions or notices:
         return "past"
     if has_finding:
         return "record"
     return "clean"
+
+
+def notice_status_conflicts(docs: list[dict]) -> list[dict]:
+    """Doctors with a recent hard avis the registry does not report as active.
+
+    Usually a short sanction already served, but it is also the shape a registry lag
+    would take, so we report it instead of letting either source silently win.
+    """
+    out = []
+    for d in docs:
+        if d.get("statusKind") == "radiated":
+            continue
+        for n in d.get("notices") or []:
+            age = notice_age_days(n)
+            if n["type"] in HARD_NOTICE_TYPES and age is not None \
+                    and age <= NOTICE_CONFLICT_DAYS:
+                out.append({"number": d["number"],
+                            "name": f"{d['lastName']}, {d['firstName']}",
+                            "notice": f"{n['type']} {n['date']}",
+                            "ageDays": age,
+                            "statusKind": d.get("statusKind"),
+                            "statusText": d.get("statusText")})
+                break
+    return sorted(out, key=lambda r: r["ageDays"])
 
 
 def sanction_years(sanctions: list[dict]) -> list[int]:
@@ -782,6 +812,13 @@ def main() -> None:
     with_charges = sum(1 for d in docs for x in (d.get("decisions") or []) if x.get("charges"))
     with_en = sum(1 for d in docs if d.get("specialtyEn"))
     print(f"decisions with charges: {with_charges}   records with EN specialty: {with_en}")
+
+    conflicts = notice_status_conflicts(docs)
+    print(f"\navis/registry disagreements (recent hard avis, not active on the registry): "
+          f"{len(conflicts)}")
+    for c in conflicts:
+        print(f"  {c['number']} {c['name']} — avis {c['notice']} ({c['ageDays']}d ago) "
+              f"-> {c['statusKind']} / {c['statusText']!r}")
 
     full_path = SITE_DATA / "doctors.json"
     full_path.write_text(

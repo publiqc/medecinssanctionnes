@@ -38,26 +38,83 @@ us rather than block us. The CMQ `robots.txt` sets no restrictions on these page
    English map of medical specialties so the English site reads naturally.
 5. **Build the dataset.** `normalize.py` turns everything into `doctors.json`. It
    keeps only genuine findings, reproduces the official text word for word, records
-   the city but not the address, respects non-publication orders that protect
-   patients, and recovers temporary radiations that were already served (these drop
-   off the live registry but remain in the decision text).
+   the city but not the address, and respects non-publication orders that protect
+   patients.
 6. **Build the site.** The website reads `doctors.json` and generates the pages.
+
+## Saying who is *currently* sanctioned
+
+This is the one thing the site must not get wrong, so it follows a single rule:
+
+> **The CMQ registry is the only source of truth for a doctor's current status.**
+> A published notice is proof a sanction was *imposed*. It is never proof the
+> sanction is *still in force*.
+
+The distinction matters because the two sources behave very differently:
+
+| | Registry (`getPhysicianDetails`) | Notices (`getNoticeListing`) |
+|--|--|--|
+| Says what | The sanctions in force **today** | That a sanction was imposed, once |
+| Retracted when a sanction ends? | Yes, the entry disappears | **No, never** |
+| Covers | Every doctor | A rolling ~3 month window |
+
+So a doctor whose radiation has been served still has a notice on file forever,
+but the registry shows them active again. We label them *sanction purgée /
+sanction already served*, not *currently struck off*. Treating the notice as the
+status was a real bug: two doctors who had served their radiation were shown as
+currently struck off.
+
+A related trap: **a radiation does not expire on its own.** A two-year radiation
+from 1996 can still be in force today, because reinstatement requires the doctor
+to apply for it. So the end date we parse out of a decision is indicative only —
+never infer that a sanction is over because its duration has elapsed. Only the
+registry can tell us.
+
+The rule is implemented in two places that must stay in agreement:
+`normalize.py` (`status_kind`) and `site/src/lib/types.ts` (`statusOf`).
 
 ## Keeping it up to date (weekly)
 
-`refresh.py` runs every week (via GitHub Actions) and does the small, incremental
-version of the above:
+`refresh.py` runs every Monday (via GitHub Actions). The design follows from one
+asymmetry:
 
-1. Reads the CMQ's published notices, a rolling list of the last three months of
-   radiations, practice restrictions, suspensions and licence revocations.
-2. Re-checks only the physicians named in a new notice.
-3. Downloads any new decision documents.
-4. Rebuilds `doctors.json`.
-5. Writes a short summary of what changed, which becomes a GitHub issue.
+> The CMQ publishes a notice when a sanction **starts**, and nothing at all when
+> it **ends**.
 
-The notices are the fast path: the CMQ publishes one the moment a sanction takes
-effect, often before the main directory record catches up. So the weekly run
-touches only a handful of physicians instead of the whole registry.
+So the notices alone can only ever *add* an accusation. They can never withdraw
+one. That is why the weekly run re-checks two groups of doctors:
+
+1. **Anyone named in a new notice** — this is how we *discover* new sanctions.
+   The notices are the fast path: the CMQ publishes one the moment a sanction
+   takes effect.
+2. **Everyone we currently show as sanctioned** — struck off or restricted. This
+   is the only way we ever find out that a sanction has *ended*, because nothing
+   is published when it does. About 360 doctors, a few minutes of paced
+   requests.
+
+Doctors we show as `past`, `record` or `clean` are not re-checked: if they pick
+up a new sanction, a notice will tell us. Pass `--no-verify` to skip group 2.
+
+The run then downloads any new decision documents, rebuilds `doctors.json`, and
+writes a summary of what changed, which becomes a GitHub issue. The summary
+reports three kinds of change: doctors **added**, doctors whose **status
+changed**, and doctors **removed** — removed meaning the last sanction came off
+the register, so we stop listing them. Removals matter most, because that is us
+withdrawing an accusation.
+
+### The safety check
+
+Before anything is committed, `verify_status.py` asserts the published data
+against the registry, in both directions:
+
+```
+statusKind == "radiated"   <=>   an active radiation, revocation or suspension
+```
+
+It re-derives the answer from the raw API records and deliberately ignores the
+notices, so it cannot inherit the assumption it exists to catch. It runs *before*
+the commit step, so a false accusation fails the workflow instead of reaching the
+site.
 
 ## Scripts
 
@@ -70,6 +127,7 @@ touches only a handful of physicians instead of the whole registry.
 | `fetch_specialties.py` | Build the French to English specialty map. |
 | `normalize.py` | Produce `site/src/data/doctors.json`. |
 | `refresh.py` | The weekly update that ties the steps together. |
+| `verify_status.py` | Assert the published status matches the registry. Fails the weekly run if not. |
 | `verify_notice_coverage.py` | Check that every doctor in the notices is on the site. |
 | `inspect_one.py`, `fetch_decision.py` | Small helpers for looking at a single record or document. |
 
