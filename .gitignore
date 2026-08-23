@@ -5,6 +5,7 @@
 /data/*
 !/data/disciplined.jsonl
 !/data/notices_ledger.jsonl
+!/data/sanctions_ledger.jsonl
 
 # Python
 __pycache__/

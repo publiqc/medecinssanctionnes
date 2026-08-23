@@ -29,6 +29,8 @@ import sys
 from datetime import date, timedelta
 from pathlib import Path
 
+import sanctions_history
+
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "disciplined.jsonl"
 SITE_DATA = ROOT / "site" / "src" / "data"
@@ -73,6 +75,11 @@ def _load_notices() -> dict[str, list[dict]]:
 
 
 NOTICES_BY_NUMBER = _load_notices()
+
+# Sanctions the registry has shown us before. The CMQ deletes a sanction once it stops
+# applying, so without this the doctor's history — and sometimes their whole entry —
+# would disappear the week it ended. See sanctions_history.py.
+HISTORY_BY_NUMBER = sanctions_history.by_number()
 
 TODAY = date.today()
 
@@ -539,6 +546,13 @@ def sanction_items(detail: dict) -> list[tuple[str, dict]]:
     return out
 
 
+def served_items(number: str, live: list[tuple[str, dict]]) -> list[tuple[str, dict]]:
+    """Sanctions we recorded earlier that the registry no longer lists, so they are over."""
+    seen = {(f, sanctions_history.iso_day(it.get("date"))) for f, it in live}
+    return [(f, it) for f, it in HISTORY_BY_NUMBER.get(number, [])
+            if (f, sanctions_history.iso_day(it.get("date"))) not in seen]
+
+
 # A complaint/motion is a genuine finding only when upheld.
 REAL_RESULTS = {"plainte accueillie", "requête accueillie", "requete accueillie"}
 
@@ -585,11 +599,13 @@ def normalize_record(record: dict) -> dict | None:
     number = (record.get("number") or "").strip()
     notices = doctor_notices(number)
     items = sanction_items(detail)
+    served = served_items(number, items)
     decisions = build_decisions(record, notice_backed=bool(notices))
-    # Include any GENUINE disciplinary record: a registry sanction, an upheld
-    # complaint/motion, a fetched decision, or a published CMQ avis. Exclude the
-    # false positives whose only cases were rejected/withdrawn complaints.
-    if not items and not has_real_result(record) and not decisions and not notices:
+    # Include any GENUINE disciplinary record: a registry sanction (current or since
+    # ended), an upheld complaint/motion, a fetched decision, or a published CMQ avis.
+    # Exclude the false positives whose only cases were rejected/withdrawn complaints.
+    if not items and not served and not has_real_result(record) and not decisions \
+            and not notices:
         return None
 
     status = record.get("status") or ""
@@ -597,7 +613,8 @@ def normalize_record(record: dict) -> dict | None:
     hist = record.get("history")
 
     sanctions = []
-    for field, item in items:
+    for field, item, is_served in ([(f, it, False) for f, it in items]
+                                  + [(f, it, True) for f, it in served]):
         stype = FIELD_TO_TYPE[field]
         start_iso = iso(item.get("date"))
         reason = clean_notice(item.get("noticeDescription") or "")
@@ -607,7 +624,8 @@ def normalize_record(record: dict) -> dict | None:
             "type": stype,
             "label": label or f"{stype.upper()} ({start_iso})",
             "date": start_iso or "",
-            "active": sanction_active(field, status, deceased),
+            # Gone from the registry means it no longer applies.
+            "active": not is_served and sanction_active(field, status, deceased),
         }
 
         if start_iso and stype in ("radiation", "suspension", "limitation"):
@@ -637,7 +655,9 @@ def normalize_record(record: dict) -> dict | None:
     dispo_kinds = {k for dec in decisions for k in dec.get("dispositionKinds", [])}
     formerly_struck = (
         ("radiation" in dispo_kinds or "revocation" in dispo_kinds
-         or any(n["type"] in ("radiation", "revocation") for n in notices))
+         or any(n["type"] in ("radiation", "revocation") for n in notices)
+         or any(s["type"] in ("radiation", "revocation") and not s["active"]
+                for s in sanctions))
         and status_k != "radiated"
     )
     doc = {
@@ -662,7 +682,6 @@ def normalize_record(record: dict) -> dict | None:
         "specialties": split_specialties(specialty),
         "decisions": decisions or None,
         "notices": notices or None,
-        "collectedAt": record.get("collectedAt"),
     }
     # Drop null-valued optional keys for a clean file.
     return {k: v for k, v in doc.items() if v is not None}

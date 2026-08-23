@@ -37,6 +37,7 @@ from pathlib import Path
 
 import cmq_client as api
 import fetch_notices
+import sanctions_history
 from collect import summarize
 
 HERE = Path(__file__).resolve().parent
@@ -128,7 +129,7 @@ def upsert_disciplined(by_pid: dict[int, dict]) -> None:
 
 
 def status_snapshot() -> dict[str, dict]:
-    """Map permit number -> {kind, name} from the current doctors.json."""
+    """Map permit number -> {kind, name, sanctions} from the current doctors.json."""
     if not DOCTORS.exists():
         return {}
     out: dict[str, dict] = {}
@@ -136,8 +137,13 @@ def status_snapshot() -> dict[str, dict]:
         num = str(d.get("number") or "").strip()
         if num:
             out[num] = {"kind": d.get("statusKind") or "record",
-                        "name": f"{d.get('lastName', '')}, {d.get('firstName', '')}"}
+                        "name": f"{d.get('lastName', '')}, {d.get('firstName', '')}",
+                        "sanctions": {sanction_key(s) for s in (d.get("sanctions") or [])}}
     return out
+
+
+def sanction_key(s: dict) -> str:
+    return f"{s.get('type')}|{s.get('date')}"
 
 
 def run(cmd: list[str]) -> None:
@@ -156,28 +162,33 @@ STATUS_LABELS = {
 }
 CATEGORY_LABELS = {
     "fr": {"radiation": "radiation", "limitation": "limitation",
-           "suspension": "suspension", "revocation": "révocation de permis"},
+           "suspension": "suspension", "revocation": "révocation de permis",
+           "commitment": "engagement"},
     "en": {"radiation": "striking off", "limitation": "practice restriction",
-           "suspension": "suspension", "revocation": "licence revocation"},
+           "suspension": "suspension", "revocation": "licence revocation",
+           "commitment": "undertaking"},
 }
 
 
 def _summary_section(lang: str, new_notices: list[dict], added: list[dict],
-                     changed: list[dict], removed: list[dict]) -> list[str]:
+                     changed: list[dict], removed: list[dict],
+                     gained: list[dict]) -> list[str]:
     tr = {
         "fr": {"none": "Aucun changement cette semaine.",
                "notices": "Nouveaux avis", "added": "Médecins ajoutés",
                "changed": "Changements de statut", "permit": "permis",
+               "gained": "Nouvelles sanctions (médecins déjà répertoriés)",
                "removed": "Médecins retirés (plus aucune sanction au tableau)"},
         "en": {"none": "No changes this week.",
                "notices": "New notices", "added": "Doctors added",
                "changed": "Status changes", "permit": "permit",
+               "gained": "New sanctions (doctors already listed)",
                "removed": "Doctors removed (no sanction left on the register)"},
     }[lang]
     status = STATUS_LABELS[lang]
     cats = CATEGORY_LABELS[lang]
     out: list[str] = []
-    if not (new_notices or added or changed or removed):
+    if not (new_notices or added or changed or removed or gained):
         out.append(tr["none"])
         return out
     if new_notices:
@@ -200,6 +211,13 @@ def _summary_section(lang: str, new_notices: list[dict], added: list[dict],
             new = status.get(d["new"], d["new"])
             out.append(f"- {d['name']} ({tr['permit']} {d['number']}) : {old} → {new}")
         out.append("")
+    if gained:
+        out.append(f"### {tr['gained']} ({len(gained)})")
+        for d in gained:
+            kind = cats.get(d["type"], d["type"])
+            out.append(f"- {d['name']} ({tr['permit']} {d['number']}) : "
+                       f"**{kind}**, {d['date']}")
+        out.append("")
     if removed:
         out.append(f"### {tr['removed']} ({len(removed)})")
         for d in removed:
@@ -209,14 +227,14 @@ def _summary_section(lang: str, new_notices: list[dict], added: list[dict],
     return out
 
 
-def write_summary(new_notices: list[dict], added: list[dict],
-                  changed: list[dict], removed: list[dict]) -> None:
+def write_summary(new_notices: list[dict], added: list[dict], changed: list[dict],
+                  removed: list[dict], gained: list[dict]) -> None:
     lines = ["# Mise à jour hebdomadaire des sanctions / Weekly sanctions update", ""]
     lines.append("## Français")
-    lines += _summary_section("fr", new_notices, added, changed, removed)
+    lines += _summary_section("fr", new_notices, added, changed, removed, gained)
     lines.append("")
     lines.append("## English")
-    lines += _summary_section("en", new_notices, added, changed, removed)
+    lines += _summary_section("en", new_notices, added, changed, removed, gained)
     SUMMARY.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"\nwrote {SUMMARY}")
 
@@ -268,6 +286,13 @@ def main() -> None:
         # Grab any newly-referenced decision PDFs (idempotent).
         run([sys.executable, "fetch_decisions.py"])
 
+    # Remember every sanction the registry currently shows, so one that ends later is
+    # still part of the doctor's history instead of vanishing with the registry entry.
+    records = [json.loads(l) for l in DISCIPLINED.read_text(encoding="utf-8").splitlines()
+               if l.strip()]
+    newly_recorded = sanctions_history.observe(records)
+    print(f"sanctions ledger: +{len(newly_recorded)} newly recorded")
+
     # Rebuild the site dataset.
     run([sys.executable, "normalize.py"])
 
@@ -283,20 +308,34 @@ def main() -> None:
                 "old": before[n]["kind"], "new": d.get("statusKind")}
                for n, d in after.items()
                if n in before and before[n]["kind"] != (d.get("statusKind") or "record")]
-    # Dropping out means the last sanction came off the register — the change we most
-    # need to publish, since it is us withdrawing an accusation.
+    # Dropping out should no longer happen: a doctor stays listed once published, and an
+    # ended sanction becomes a status change. Kept as a tripwire.
     removed = [{"number": n, "name": b["name"], "old": b["kind"]}
                for n, b in before.items() if n not in after]
+    # A sanction added to someone already listed does not move their status bucket, so it
+    # would otherwise go unreported (Morris 79040, 2026-08-17).
+    gained = []
+    for n, d in after.items():
+        if n not in before:
+            continue
+        fresh = [s for s in (d.get("sanctions") or [])
+                 if sanction_key(s) not in before[n]["sanctions"] and s.get("active")]
+        for s in fresh:
+            gained.append({"number": n, "name": name_of[n], "type": s.get("type"),
+                           "date": s.get("date"), "label": s.get("label")})
 
-    print(f"\nadded: {len(added)}   status-changed: {len(changed)}   removed: {len(removed)}")
+    print(f"\nadded: {len(added)}   status-changed: {len(changed)}   "
+          f"new-sanctions: {len(gained)}   removed: {len(removed)}")
     for d in added:
         print(f"  + {d['name']} ({d['number']}) {d['statusKind']}")
     for d in changed:
         print(f"  ~ {d['name']} ({d['number']}) {d['old']} -> {d['new']}")
+    for d in gained:
+        print(f"  ! {d['name']} ({d['number']}) new {d['type']} {d['date']}")
     for d in removed:
         print(f"  - {d['name']} ({d['number']}) {d['old']} -> no longer listed")
 
-    write_summary(new_notices, added, changed, removed)
+    write_summary(new_notices, added, changed, removed, gained)
 
 
 if __name__ == "__main__":

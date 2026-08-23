@@ -73,6 +73,25 @@ registry can tell us.
 The rule is implemented in two places that must stay in agreement:
 `normalize.py` (`status_kind`) and `site/src/lib/types.ts` (`statusOf`).
 
+## Remembering sanctions the CMQ deletes
+
+The registry is a snapshot, not an archive: when a sanction stops applying, the
+CMQ **removes it** from the physician's record. A doctor whose only listed
+sanction was an undertaking to cease practice would therefore disappear from the
+site entirely the week they fulfilled it — which is exactly what happened to two
+doctors before we noticed.
+
+So `sanctions_history.py` keeps `data/sanctions_ledger.jsonl`: every sanction the
+registry has ever shown us, recorded once and never deleted, with `firstSeen` and
+`lastSeen` dates. `normalize.py` merges the two sources — sanctions still on the
+registry stay **active**, sanctions the registry has dropped are shown as
+**served**.
+
+The result is the rule that matters: **a doctor is never removed once published.**
+A sanction ending is a change of status, not a disappearance. And because only
+sanctions actually observed on the registry are ever recorded, this can never
+resurrect someone whose complaints were dismissed or withdrawn.
+
 ## Keeping it up to date (weekly)
 
 `refresh.py` runs every Monday (via GitHub Actions). The design follows from one
@@ -95,12 +114,24 @@ one. That is why the weekly run re-checks two groups of doctors:
 Doctors we show as `past`, `record` or `clean` are not re-checked: if they pick
 up a new sanction, a notice will tell us. Pass `--no-verify` to skip group 2.
 
-The run then downloads any new decision documents, rebuilds `doctors.json`, and
-writes a summary of what changed, which becomes a GitHub issue. The summary
-reports three kinds of change: doctors **added**, doctors whose **status
-changed**, and doctors **removed** — removed meaning the last sanction came off
-the register, so we stop listing them. Removals matter most, because that is us
-withdrawing an accusation.
+The run then downloads any new decision documents, records what the registry
+currently shows into the sanctions ledger, rebuilds `doctors.json`, and writes a
+summary of what changed, which becomes a GitHub issue. The summary reports
+doctors **added**, **status changes**, and **new sanctions on doctors already
+listed** — that last one matters because a doctor who picks up another sanction
+stays in the same status bucket, so the change would otherwise go unmentioned.
+
+It also has a **removed** section, which should now always be empty; it is a
+tripwire for the no-removal rule above.
+
+### Keeping the diffs readable
+
+`normalize.py` must produce a **byte-identical** `doctors.json` when nothing has
+changed, so a weekly commit that touches it means something really happened. That
+is why no timestamps go into the published file (`collectedAt` used to, and made
+~360 records appear to change every week). `data/disciplined.jsonl` still carries
+`collectedAt`, because there it is genuine state: it records when we last verified
+each doctor.
 
 ### The safety check
 
@@ -126,6 +157,7 @@ site.
 | `fetch_decisions.py` | Download decision documents and extract their text. |
 | `fetch_specialties.py` | Build the French to English specialty map. |
 | `normalize.py` | Produce `site/src/data/doctors.json`. |
+| `sanctions_history.py` | Remember sanctions the registry later deletes. |
 | `refresh.py` | The weekly update that ties the steps together. |
 | `verify_status.py` | Assert the published status matches the registry. Fails the weekly run if not. |
 | `verify_notice_coverage.py` | Check that every doctor in the notices is on the site. |
@@ -133,9 +165,10 @@ site.
 
 ## What stays on the collecting machine
 
-The website only needs the two small, privacy-safe files that the weekly update
-depends on: the disciplined subset (with contact details removed) and the history
-of published notices. Everything else stays local and is not published: the full
-raw directory, because it holds personal contact information we do not use, and the
-downloaded decision PDFs, because they are large and can be fetched again from the
-CMQ at any time.
+The website only needs the small, privacy-safe files that the weekly update
+depends on: the disciplined subset (with contact details removed), the history of
+published notices, and the history of sanctions the registry has shown us. Both
+ledgers are append-only and must never be rewritten or pruned. Everything else
+stays local and is not published: the full raw directory, because it holds
+personal contact information we do not use, and the downloaded decision PDFs,
+because they are large and can be fetched again from the CMQ at any time.

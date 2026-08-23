@@ -99,10 +99,8 @@ export interface Doctor {
   specialties?: string[];
   /** Disciplinary decision documents (metadata + anonymized charges), when fetched. */
   decisions?: DecisionRef[];
-  /** Public CMQ disciplinary avis (getNoticeListing) — authoritative status signal. */
+  /** Public CMQ disciplinary avis (getNoticeListing) — evidence a sanction was imposed. */
   notices?: NoticeRef[];
-  /** ISO timestamp of when this record was collected. */
-  collectedAt?: string;
 }
 
 export type StatusKind = "radiated" | "restricted" | "past" | "record" | "clean";

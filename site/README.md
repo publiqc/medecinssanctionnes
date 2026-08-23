@@ -58,8 +58,10 @@ contradict the dataset.
 
 That status comes only from the sanctions the CMQ registry reports as active. A
 published notice never makes a doctor "currently struck off" on its own, because
-the CMQ never retracts a notice once a sanction has been served. See
-[collector/README.md](../collector/README.md) for the reasoning.
+the CMQ never retracts a notice once a sanction has been served. A doctor is also
+never dropped from the dataset once published — a sanction that ends becomes
+"sanction already served". See [collector/README.md](../collector/README.md) for
+the reasoning, and [AGENTS.md](../AGENTS.md) for the full set of rules.
 
 ## Common scripts
 

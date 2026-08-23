@@ -10,6 +10,9 @@ name: Weekly sanctions refresh
 #   The working set the refresh needs is small and PII-free, so it lives on main:
 #     - data/disciplined.jsonl      (minimized: no contact PII, see collect.minimize_detail)
 #     - data/notices_ledger.jsonl   (public avis history)
+#     - data/sanctions_ledger.jsonl (sanctions the registry has shown us; the CMQ
+#                                    deletes a sanction once it ends, so this is the
+#                                    only record that it ever existed)
 #   The decision PDF/text cache (data/decisions/**) is re-fetchable public
 #   documents, so it uses actions/cache — if evicted, refresh.py just re-downloads
 #   it that week (the fetcher is idempotent). The raw full registry
@@ -64,7 +67,7 @@ jobs:
         run: |
           git config user.name "sanctions-bot"
           git config user.email "actions@github.com"
-          git add data/disciplined.jsonl data/notices_ledger.jsonl site/src/data/doctors.json
+          git add data/disciplined.jsonl data/notices_ledger.jsonl data/sanctions_ledger.jsonl site/src/data/doctors.json
           if git diff --cached --quiet; then
             echo "No changes this week."
           else
