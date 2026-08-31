@@ -17551,7 +17551,11 @@
         "type": "radiation",
         "label": "RADIATION (2026-08-24)",
         "date": "2026-08-24",
-        "active": true
+        "active": true,
+        "durationText": "6 mois",
+        "endDate": "2027-02-24",
+        "endDerived": true,
+        "reason": "AVIS est donné par les présentes que le Dr Michel Taillefer (82198) (médecine de famille), exerçant la profession de médecin à Saint-Sauveur (Québec), a plaidé coupable devant le Conseil de discipline du Collège des médecins du Québec de l’infraction qui lui était reprochée :\n\n- d’avoir fait défaut, au cours de la période allant de l’année 2022 à l’année 2025, de respecter un engagement qu’il a pris le 13 juin 2022 auprès du syndic adjoint et de l’enquêteuse principale au Collège des médecins du Québec, en conservant, à la clinique Plexus à Saint-Sauveur, et en utilisant auprès de plusieurs patients, des produits non homologués pour usage médical chez l’humain au Canada, soit ChondroPlus et SingJoint, au surplus sans en informer ses patients (Chef 1)\n\nLe 22 juillet 2026, le conseil de discipline a imposé au Dr Michel Taillefer, une radiation du tableau de l’ordre pour une période de 6 mois sur l’unique chef de la plainte.\n\nLe Dr Michel Taillefer est donc radié du tableau de l’ordre pour une période de 6 mois à compter du 24 août 2026.\n\nLe présent avis est donné en vertu des articles 156 et 180 du Code des professions.\n\nLe 24 août 2026\nLinda Bélanger, avocate\nSecrétaire du conseil de discipline"
       }
     ],
     "caseCount": 2,
@@ -17582,9 +17586,8 @@
       {
         "case": "24-2025-01227",
         "date": "2026-07-22",
-        "grounds": "Non-respect d'un engagement ou d'une limitation d'exercice",
+        "result": "Plainte accueillie",
         "precision": "Décision sur culpabilité et sanction",
-        "precisionStatus": "sanction non exécutoire",
         "documentId": 503,
         "hasText": true,
         "disposition": "IMPOSE 1, une période de radiation de six mois.",
@@ -19917,7 +19920,7 @@
     "number": "84521",
     "lastName": "Iskandar",
     "firstName": "Hani L.",
-    "city": "Mont-Royal",
+    "city": "Montréal",
     "specialty": "Médecine de famille",
     "specialtyEn": "Family Medicine",
     "memberSince": 1984,
@@ -32604,13 +32607,13 @@
     "specialtyEn": "Family Medicine",
     "memberSince": 2004,
     "specialtyYear": 2010,
-    "statusText": "Radié depuis le 2026-06-15",
+    "statusText": "Inscrit - Actif",
     "sanctions": [
       {
         "type": "radiation",
         "label": "RADIATION (2026-06-15)",
         "date": "2026-06-15",
-        "active": true,
+        "active": false,
         "durationText": "10 semaines",
         "endDate": "2026-08-24",
         "endDerived": true,
@@ -32621,7 +32624,8 @@
     "rulingLinks": [],
     "deceased": false,
     "primaryType": "radiation",
-    "statusKind": "radiated",
+    "statusKind": "past",
+    "formerlyStruckOff": true,
     "sanctionYears": [
       2026
     ],
@@ -34639,20 +34643,20 @@
     "specialtyEn": "Family Medicine",
     "memberSince": 2011,
     "specialtyYear": 2011,
-    "statusText": "Radié depuis le 2020-11-20",
+    "statusText": "Inscrit - Actif (le droit d'exercer de ce membre est limité)",
     "sanctions": [
       {
         "type": "limitation",
         "label": "LIMITATION D'EXERCICE (2026-02-23)",
         "date": "2026-02-23",
-        "active": false,
+        "active": true,
         "reason": "L’exercice de ce médecin est limité aux seuls actes nécessaires à la réalisation d'une activité de perfectionnement visant à évaluer ses compétences."
       },
       {
         "type": "radiation",
         "label": "RADIATION (2020-11-20)",
         "date": "2020-11-20",
-        "active": true,
+        "active": false,
         "durationText": "5 ans",
         "endDate": "2025-11-20",
         "endDerived": true,
@@ -34663,7 +34667,8 @@
     "rulingLinks": [],
     "deceased": false,
     "primaryType": "radiation",
-    "statusKind": "radiated",
+    "statusKind": "restricted",
+    "formerlyStruckOff": true,
     "sanctionYears": [
       2026,
       2020
