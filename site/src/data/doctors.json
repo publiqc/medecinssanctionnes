@@ -13755,27 +13755,27 @@
     "specialtyEn": "Urology",
     "memberSince": 1979,
     "specialtyYear": 1982,
-    "statusText": "Inscrit - Actif (le droit d'exercer de ce membre est limité)",
+    "statusText": "Inscrit - Inactif",
     "sanctions": [
       {
         "type": "commitment",
         "label": "CESSATION D'EXERCICE",
         "date": "2026-08-10",
-        "active": true,
+        "active": false,
         "reason": "Le médecin cessera l’exercice de la médecine au plus tard le 1er septembre 2026.\n\nLe 10 août 2026"
       },
       {
         "type": "limitation",
         "label": "LIMITATION D'EXERCICE (2025-12-08)",
         "date": "2025-12-08",
-        "active": true,
+        "active": false,
         "reason": "Le médecin limitera son exercice à l’urologie ambulatoire en cabinet et à ne faire aucune procédure chirurgicale, ni circoncision, ni vasectomie, ni cystoscopie, ni biopsie, ni toute autre intervention nécessitant l’usage de dispositifs médicaux critiques, et conséquemment à ne faire aucun retraitement de ces dispositifs, et ce, à compter du 8 décembre 2025.\n\nLe 8 décembre 2025"
       },
       {
         "type": "limitation",
         "label": "LIMITATION D'EXERCICE (2015-11-02)",
         "date": "2015-11-02",
-        "active": true,
+        "active": false,
         "reason": "Le médecin s'engage à ne plus procéder à des chirurgies de type cystectomie radicale avec conduit iléal ou conduit iléal à des fins de dérivation urinaire chez un patient atteint d'un cancer de la vessie.\n\nMontréal, le 2 novembre 2015\nDirection des enquêtes\nSyndic"
       }
     ],
@@ -13796,7 +13796,7 @@
     ],
     "deceased": false,
     "primaryType": "limitation",
-    "statusKind": "restricted",
+    "statusKind": "past",
     "sanctionYears": [
       2026,
       2025,
@@ -19925,13 +19925,13 @@
     "specialtyEn": "Family Medicine",
     "memberSince": 1984,
     "specialtyYear": 2010,
-    "statusText": "Inscrit - Actif",
+    "statusText": "Inscrit - Inactif",
     "sanctions": [
       {
         "type": "commitment",
         "label": "CESSATION D'EXERCICE",
         "date": "2026-05-07",
-        "active": true,
+        "active": false,
         "reason": "Le médecin cessera l’exercice de la médecine au plus tard le1er septembre 2026.\n\nLe 07 mai 2026\nCessation d'exercice"
       }
     ],
@@ -19939,7 +19939,7 @@
     "rulingLinks": [],
     "deceased": false,
     "primaryType": "commitment",
-    "statusKind": "restricted",
+    "statusKind": "past",
     "sanctionYears": [
       2026
     ],
@@ -35349,9 +35349,10 @@
     "decisions": [
       {
         "case": "24-2022-01155",
-        "date": "2023-07-17",
+        "date": "2026-08-17",
         "result": "Plainte accueillie",
-        "precision": "Décision rectifiée sur culpabilité et sanction",
+        "precision": "Décision sur reprise du plein droit de l'exercice",
+        "precisionStatus": "Requête accueillie",
         "documentId": 314,
         "hasText": true,
         "charges": "1. À Kenora, en Ontario, le ou vers le 13 août 2021, a abusé de sa relation professionnelle avec sa patiente [A] en ayant avec elle une relation sexuelle, contrairement à l’article 17 du Code de déontologie des médecins (RLRQ, c. M￾9, r. 17) et à l’article 59.1 du Code des professions (RLRQ, c. C-26) et commettant par ce fait un acte dérogatoire à l’honneur ou à la dignité de sa profession ou à la discipline des membres de l’ordre, contrairement à l’article 59.2 dudit Code des professions; 2. À Baie-Comeau, entre le ou vers le 1er juin et le ou vers le 3 juin 2022, a fait défaut d’avoir une conduite irréprochable à l’endroit de sa patiente [B], notamment en lui dévoilant des éléments de sa vie personnelle et intime à l’occasion de deux consultations et en la contactant subséquemment en soirée au sujet notamment de la seconde consultation, contrairement à l’article 17 du Code de déontologie des médecins (RLRQ, c. M-9, r. 17) et commettant par ce fait un acte dérogatoire à l’honneur ou à la dignité de sa profession ou à la discipline des membres de l’ordre, contrairement à l’article 59.2 du Code des professions (RLRQ, c. C-26); [Transcription textuelle, sauf anonymisation] 1 Pièce SP-4.",
