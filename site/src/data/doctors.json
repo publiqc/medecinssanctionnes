@@ -22568,20 +22568,20 @@
     "specialtyEn": "Neurosurgery",
     "memberSince": 1987,
     "specialtyYear": 1987,
-    "statusText": "Inscrit - Actif (le droit d'exercer de ce membre est limité)",
+    "statusText": "Inscrit - Inactif",
     "sanctions": [
       {
         "type": "commitment",
         "label": "CESSATION D'EXERCICE",
         "date": "2026-03-18",
-        "active": true,
+        "active": false,
         "reason": "Le médecin cessera l'exercice de la médecine au plus tard le 11 septembre 2026.\n\nLe 18 mars 2026"
       },
       {
         "type": "limitation",
         "label": "LIMITATION D'EXERCICE (2025-01-30)",
         "date": "2025-01-30",
-        "active": true,
+        "active": false,
         "reason": "Le médecin cessera toute intervention chirurgicale en tout lieu d'exercice à compter du 27 janvier 2025.\n\nLe 30 janvier 2025"
       }
     ],
@@ -22589,7 +22589,7 @@
     "rulingLinks": [],
     "deceased": false,
     "primaryType": "limitation",
-    "statusKind": "restricted",
+    "statusKind": "past",
     "formerlyStruckOff": true,
     "sanctionYears": [
       2026,
@@ -26727,13 +26727,13 @@
     "specialtyEn": "Family Medicine",
     "memberSince": 1995,
     "specialtyYear": 2010,
-    "statusText": "Radié depuis le 2026-05-29",
+    "statusText": "Inscrit - Actif",
     "sanctions": [
       {
         "type": "radiation",
         "label": "RADIATION (2026-05-29)",
         "date": "2026-05-29",
-        "active": true,
+        "active": false,
         "durationText": "3 mois",
         "endDate": "2026-08-29",
         "endDerived": true,
@@ -26744,7 +26744,8 @@
     "rulingLinks": [],
     "deceased": false,
     "primaryType": "radiation",
-    "statusKind": "radiated",
+    "statusKind": "past",
+    "formerlyStruckOff": true,
     "sanctionYears": [
       2026
     ],
@@ -31648,13 +31649,13 @@
     "specialtyEn": "Colorectal Surgery, General Surgery",
     "memberSince": 2006,
     "specialtyYear": 2011,
-    "statusText": "Radié depuis le 2026-07-08",
+    "statusText": "Inscrit - Actif",
     "sanctions": [
       {
         "type": "radiation",
         "label": "RADIATION (2026-07-08)",
         "date": "2026-07-08",
-        "active": true,
+        "active": false,
         "durationText": "2 mois",
         "endDate": "2026-09-08",
         "endDerived": true,
@@ -31665,7 +31666,8 @@
     "rulingLinks": [],
     "deceased": false,
     "primaryType": "radiation",
-    "statusKind": "radiated",
+    "statusKind": "past",
+    "formerlyStruckOff": true,
     "sanctionYears": [
       2026
     ],
