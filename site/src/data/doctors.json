@@ -23301,28 +23301,28 @@
     "specialtyEn": "Family Medicine",
     "memberSince": 1988,
     "specialtyYear": 2010,
-    "statusText": "Inscrit - Actif (le droit d'exercer de ce membre est limité)",
+    "statusText": "Démission depuis le 2026-09-16",
     "sanctions": [
-      {
-        "type": "limitation",
-        "label": "LIMITATION D'EXERCICE (2026-04-30)",
-        "date": "2026-04-30",
-        "active": true,
-        "reason": "Le médecin exerce exclusivement des activités administratives à compter du 27 avril 2026.\n\nLe 30 avril 2026"
-      },
       {
         "type": "commitment",
         "label": "CESSATION D'EXERCICE",
         "date": "2026-04-30",
-        "active": true,
+        "active": false,
         "reason": "Le médecin cesse définitivement l'exercice de la médecine à compter du 16 septembre 2026.\n\nLe 30 avril 2026"
+      },
+      {
+        "type": "limitation",
+        "label": "LIMITATION D'EXERCICE (2026-04-30)",
+        "date": "2026-04-30",
+        "active": false,
+        "reason": "Le médecin exerce exclusivement des activités administratives à compter du 27 avril 2026.\n\nLe 30 avril 2026"
       }
     ],
     "caseCount": 2,
     "rulingLinks": [],
     "deceased": false,
     "primaryType": "limitation",
-    "statusKind": "restricted",
+    "statusKind": "past",
     "sanctionYears": [
       2026
     ],
@@ -36230,6 +36230,43 @@
     ],
     "specialties": [
       "Médecine de famille"
+    ]
+  },
+  {
+    "number": "12825",
+    "lastName": "Macpherson",
+    "firstName": "Amanda Christina",
+    "city": "Mistissini",
+    "specialty": "Médecine de famille",
+    "specialtyEn": "Family Medicine",
+    "memberSince": 2026,
+    "specialtyYear": 2026,
+    "statusText": "Inscrit - Actif (le droit d'exercer de ce membre est limité)",
+    "sanctions": [
+      {
+        "type": "limitation",
+        "label": "LIMITATION D'EXERCICE (2026-09-02)",
+        "date": "2026-09-02",
+        "active": true,
+        "reason": "Le médecin s’engage à exercer la profession uniquement dans une réserve, dans un établissement où vit une communauté autochtone ou sur les terres de la catégorie I et de la catégorie I-N.\n\nLe 02 septembre 2026"
+      }
+    ],
+    "caseCount": 1,
+    "rulingLinks": [],
+    "deceased": false,
+    "primaryType": "limitation",
+    "statusKind": "restricted",
+    "sanctionYears": [
+      2026
+    ],
+    "specialties": [
+      "Médecine de famille"
+    ],
+    "notices": [
+      {
+        "type": "limitation",
+        "date": "2026-09-02"
+      }
     ]
   }
 ]
