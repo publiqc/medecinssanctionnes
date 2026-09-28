@@ -9580,21 +9580,21 @@
     "specialtyEn": "Family Medicine",
     "memberSince": 1975,
     "specialtyYear": 2010,
-    "statusText": "Inscrit - Actif (le droit d'exercer de ce membre est limité)",
+    "statusText": "S.O. (Personne décédée)",
     "sanctions": [
       {
         "type": "limitation",
         "label": "LIMITATION D'EXERCICE (2019-02-20)",
         "date": "2019-02-20",
-        "active": true,
+        "active": false,
         "reason": "Le médecin s’engage à ne pas pratiquer à l’urgence dans aucun établissement au plus tard le 24 février 2019.\n\nMontréal, le 20 février 2019"
       }
     ],
     "caseCount": 1,
     "rulingLinks": [],
-    "deceased": false,
+    "deceased": true,
     "primaryType": "limitation",
-    "statusKind": "restricted",
+    "statusKind": "past",
     "sanctionYears": [
       2019
     ],
