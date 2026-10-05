@@ -11891,13 +11891,13 @@
     "specialtyEn": "Diagnostic Radiology",
     "memberSince": 1977,
     "specialtyYear": 1982,
-    "statusText": "Inscrit - Actif",
+    "statusText": "Inscrit - Inactif",
     "sanctions": [
       {
         "type": "commitment",
         "label": "CESSATION D'EXERCICE",
         "date": "2026-05-29",
-        "active": true,
+        "active": false,
         "reason": "Le médecin cessera l'exercice de la médecine au plus tard le 30 septembre 2026"
       }
     ],
@@ -11905,7 +11905,7 @@
     "rulingLinks": [],
     "deceased": false,
     "primaryType": "commitment",
-    "statusKind": "restricted",
+    "statusKind": "past",
     "sanctionYears": [
       2026
     ],
@@ -17294,13 +17294,13 @@
     "specialtyEn": "Family Medicine",
     "memberSince": 1981,
     "specialtyYear": 2010,
-    "statusText": "Inscrit - Actif",
+    "statusText": "Inscrit - Inactif",
     "sanctions": [
       {
         "type": "commitment",
         "label": "CESSATION D'EXERCICE",
         "date": "2026-06-08",
-        "active": true,
+        "active": false,
         "reason": "Le médecin cessera l’exercice de la médecine au plus tard le 30 septembre 2026.\n\nLe 08 juin 2026"
       }
     ],
@@ -17308,7 +17308,7 @@
     "rulingLinks": [],
     "deceased": false,
     "primaryType": "commitment",
-    "statusKind": "restricted",
+    "statusKind": "past",
     "sanctionYears": [
       2026
     ],
@@ -21430,6 +21430,13 @@
     "statusText": "Inscrit - Actif (le droit d'exercer de ce membre est limité)",
     "sanctions": [
       {
+        "type": "commitment",
+        "label": "CESSATION D'EXERCICE",
+        "date": "2026-10-01",
+        "active": true,
+        "reason": "Le médecin cessera l'exercice de la médecine au plus tard le 31 mars 2027.\n\nLe 01 octobre 2026"
+      },
+      {
         "type": "limitation",
         "label": "LIMITATION D'EXERCICE (2017-09-13)",
         "date": "2017-09-13",
@@ -21444,12 +21451,13 @@
         "reason": "Le médecin s'engage à cesser l'exercice de la médecine d'urgence en établissement."
       }
     ],
-    "caseCount": 2,
+    "caseCount": 3,
     "rulingLinks": [],
     "deceased": false,
     "primaryType": "limitation",
     "statusKind": "restricted",
     "sanctionYears": [
+      2026,
       2017,
       2010
     ],
@@ -22849,7 +22857,8 @@
         "type": "limitation",
         "label": "LIMITATION D'EXERCICE (2026-07-15)",
         "date": "2026-07-15",
-        "active": true
+        "active": true,
+        "reason": "Ce médecin doit réussir un stage de perfectionnement avant de reprendre l’exercice en chirurgie orthopédique, volets traumatologie et reconstruction du ligament croisé antérieur."
       }
     ],
     "caseCount": 1,
@@ -26421,6 +26430,13 @@
     "statusText": "Inscrit - Actif (le droit d'exercer de ce membre est limité)",
     "sanctions": [
       {
+        "type": "commitment",
+        "label": "CESSATION D'EXERCICE",
+        "date": "2026-10-01",
+        "active": true,
+        "reason": "La médecin cessera l'exercice de la médecine au plus tard le 31 mars 2027.\n\nLe 01 octobre 2026"
+      },
+      {
         "type": "limitation",
         "label": "LIMITATION D'EXERCICE (2021-02-15)",
         "date": "2021-02-15",
@@ -26428,12 +26444,13 @@
         "reason": "Le médecin s’engage à cesser la pratique de l'électromyographie (EMG), à compter du 15 février 2021.\n\nMontréal, le 15 février 2021"
       }
     ],
-    "caseCount": 1,
+    "caseCount": 2,
     "rulingLinks": [],
     "deceased": false,
     "primaryType": "limitation",
     "statusKind": "restricted",
     "sanctionYears": [
+      2026,
       2021
     ],
     "specialties": [
@@ -28027,7 +28044,8 @@
         "type": "limitation",
         "label": "LIMITATION D'EXERCICE (2020-06-08)",
         "date": "2020-06-08",
-        "active": true
+        "active": true,
+        "reason": "S’engage à cesser de prescrire une antibiothérapie de plus de 28 jours aux nouveaux patients diagnostiqués porteur de maladie de Lyme. La limitation prendra fin si un protocole de recherche clinique portant sur la maladie de Lyme chronique ou avec symptômes persistants est approuvé par un comité d’éthique à la recherche. Il pourra alors prescrire un traitement antibiotique de plus de 28 jours à un patient diagnostiqué porteur de la maladie de Lyme."
       }
     ],
     "caseCount": 1,
@@ -30343,28 +30361,62 @@
     "specialtyEn": "Nuclear Medicine",
     "memberSince": 2003,
     "specialtyYear": 2003,
-    "statusText": "Démission depuis le 2023-05-23",
-    "sanctions": [],
+    "statusText": "Radié depuis le 2026-10-01",
+    "sanctions": [
+      {
+        "type": "radiation",
+        "label": "RADIATION (2026-10-01)",
+        "date": "2026-10-01",
+        "active": true,
+        "durationText": "2 mois",
+        "endDate": "2026-12-01",
+        "endDerived": true,
+        "reason": "AVIS est donné, par les présentes, que la Dre Isabelle Lafontaine (permis 03341), exerçant la profession de médecin (médecine nucléaire) au Québec, a été trouvée coupable par le conseil de discipline du Collège des médecins du Québec de l’infraction qui lui était reprochée :\n\n- d’avoir, à Montréal, entre le ou vers le 1er mars 2022 et le ou vers le 10 avril 2022 et entre le ou vers le 29 avril 2022 et le ou vers le 19 septembre 2022, réclamé à la Régie de l’assurance-maladie du Québec des honoraires pour des services professionnels non rendus à l’égard de plusieurs patients (chef 1)\n\nLe 30 juillet 2026, le conseil de discipline a imposé à Dre Lafontaine une radiation d’une période de deux mois sur l’unique chef de la plainte modifiée.\n\nCette période de radiation ne devenant exécutoire qu’au moment de la réinscription de l’intimée au tableau des membres du Collège des médecins, la Dre Isabelle Lafontaine est donc radiée du tableau de l’ordre pour une période totalisant 2 (deux) mois à compter du 1er octobre 2026.\n\nLe présent avis est donné en vertu des articles 156 et 180 du Code des professions.\n\nLe 1er octobre 2026\nLinda Bélanger, avocate\nSecrétaire du conseil de discipline"
+      },
+      {
+        "type": "limitation",
+        "label": "LIMITATION D'EXERCICE (2026-07-15)",
+        "date": "2026-07-15",
+        "active": false,
+        "reason": "L'exercice de ce médecin est limité aux seuls actes nécessaires à la réalisation d’une activité de perfectionnement visant à évaluer ses compétences.\n\nLe 15 juillet 2026"
+      }
+    ],
     "caseCount": 1,
     "rulingLinks": [],
     "deceased": false,
-    "statusKind": "record",
-    "sanctionYears": [],
+    "primaryType": "radiation",
+    "statusKind": "radiated",
+    "sanctionYears": [
+      2026
+    ],
     "specialties": [
       "Médecine nucléaire"
     ],
     "decisions": [
       {
         "case": "24-2022-01148",
-        "date": "2026-07-02",
+        "date": "2026-07-30",
         "result": "Plainte accueillie",
-        "grounds": "Facturation déraisonnable ou non justifiée de services non assurés",
-        "precision": "Décision sur requête",
-        "precisionStatus": "Requête rejetée",
-        "documentId": 441,
+        "precision": "Décision sur sanction",
+        "documentId": 505,
         "hasText": true,
         "publicationBan": true,
-        "charges": "1. À Montréal, entre le ou vers le 1er mars 2022 et le ou vers le 10 avril 2022 et entre le ou vers le 29 avril 2022 et le ou vers le 19 septembre 2022, a réclamé à la Régie de l’assurance-maladie du Québec des honoraires pour des services professionnels non rendus à l’égard de plusieurs patients, contrairement aux articles 84 et 106 du Code de déontologie des médecins (RLRQ c M-9, r 17) et commettant de par ce fait un acte dérogatoire à l’honneur ou à la dignité de sa 1 Pièce P-1. profession ou à la discipline des membres de l’ordre, contrairement à l’article 59.2 du Code des professions (RLRQ c C-26); QUESTION EN LITIGE"
+        "charges": "1. À Montréal, entre le ou vers le 1er mars 2022 et le ou vers le 10 avril 2022 et entre le ou vers le 29 avril 2022 et le ou vers le 19 septembre 2022, a réclamé à la Régie de l’assurance-maladie du Québec des honoraires pour des services professionnels non rendus à l’égard de plusieurs patients, contrairement aux articles 84 et 106 du Code de déontologie des médecins (RLRQ c M-9, r 17) et commettant de par ce fait un acte dérogatoire à l’honneur ou à la dignité de sa profession ou à la discipline des membres de l’ordre, contrairement à l’article 59.2 du Code des professions (RLRQ c C-26)",
+        "disposition": "IMPOSE à l’intimée une période de radiation de deux (2) mois et une amende de 2 500 $.",
+        "dispositionKinds": [
+          "radiation",
+          "fine"
+        ]
+      }
+    ],
+    "notices": [
+      {
+        "type": "radiation",
+        "date": "2026-10-01"
+      },
+      {
+        "type": "limitation",
+        "date": "2026-07-15"
       }
     ]
   },
@@ -34126,22 +34178,36 @@
     "sanctions": [
       {
         "type": "limitation",
+        "label": "LIMITATION D'EXERCICE (2026-09-28)",
+        "date": "2026-09-28",
+        "active": true,
+        "reason": "Le médecin s’engage, lorsqu’il expose des opinions médicales par la voie des médias d’information d’émettre des opinions conformes aux données actuelles de la science médicale."
+      },
+      {
+        "type": "limitation",
         "label": "LIMITATION D'EXERCICE (2021-08-19)",
         "date": "2021-08-19",
-        "active": true,
+        "active": false,
         "reason": "Le médecin s’engage : à fermer son compte Twitter @mathbernier le 19 août 2021; à s’abstenir de communiquer via les médias sociaux ou autres médias de masses ses opinions sur des enjeux médicaux ou médico-sociaux; à transmettre aux quotidiens Le Journal de Montréal ou Le Journal de Québec ou Le Soleil, sous forme de lettre ouverte, des excuses et des explications adressées à la population québécoise en lien avec ses propos tenus sur les réseaux sociaux depuis le début de la pandémie de COVID-19.\n\nMontréal, le 12 août 2021\nDirection des enquêtes\nSyndique"
       }
     ],
-    "caseCount": 1,
+    "caseCount": 2,
     "rulingLinks": [],
     "deceased": false,
     "primaryType": "limitation",
     "statusKind": "restricted",
     "sanctionYears": [
+      2026,
       2021
     ],
     "specialties": [
       "Médecine de famille"
+    ],
+    "notices": [
+      {
+        "type": "limitation",
+        "date": "2026-09-28"
+      }
     ]
   },
   {
@@ -35309,16 +35375,16 @@
     "number": "20414",
     "lastName": "Sarhani",
     "firstName": "Réda",
-    "city": "Roberval",
+    "city": "Saint-Laurent",
     "specialty": "Psychiatrie",
     "specialtyEn": "Psychiatry",
     "memberSince": 2020,
     "specialtyYear": 2020,
-    "statusText": "Radié depuis le 2023-07-17",
+    "statusText": "Inscrit - Actif (le droit d'exercer de ce membre est limité)",
     "sanctions": [
       {
-        "type": "radiation",
-        "label": "RADIATION (2023-07-17)",
+        "type": "limitation",
+        "label": "MESURE D'ENCADREMENT (2023-07-17)",
         "date": "2023-07-17",
         "active": true,
         "durationText": "3 ans",
@@ -35327,8 +35393,8 @@
         "reason": "AVIS est donné, par les présentes, que le Dr Réda Sarhani (permis 20414), exerçant la profession de médecin (psychiatrie) à Roberval (Québec), a plaidé coupable devant le conseil de discipline du Collège des médecins du Québec des infractions qui lui étaient reprochées :\n\n1) d’avoir abusé, à Kenora, en Ontario, le ou vers le 13 août 2021, de sa relation professionnelle avec sa patiente [A] en ayant avec elle une relation sexuelle (chef 1)\n\n2) d’avoir fait défaut, à Baie-Comeau, entre le ou vers le 1er juin et le ou vers le 3 juin 2022, d’avoir une conduite irréprochable à l’endroit de sa patiente [B], notamment en lui dévoilant des éléments de sa vie personnelle et intime à l’occasion de deux consultations et en la contactant subséquemment en soirée au sujet notamment de la seconde consultation (chef 2)\n\nLe 10 juillet 2023, le conseil de discipline a imposé au Dr Sarhani, une période de radiation temporaire de 3 ans sous le chef 1 et une période de radiation temporaire de 2 mois sous le chef 2 de la plainte. Ces périodes de radiation doivent être purgées de façon concurrente.\n\nDe plus, le conseil a imposé une limitation permanente de son droit d’exercer des activités professionnelles, selon les modalités suivantes :\n\nÊtre, en tout temps, accompagné d’une professionnelle de la santé de genre féminin, membre d’un ordre professionnel, lors de l’évaluation, du suivi ou de la prise en charge d’une personne de genre féminin, et ce, peu importe la pathologie présentée par cette dernière.\n\nLa décision du conseil étant exécutoire dès la signification à l’intimé, le Dr Réda Sarhani est donc radié du tableau de l’ordre pour une période totalisant 3 ans et limité dans sa pratique à compter du 17 juillet 2023.\n\nLe présent avis est donné en vertu des articles 156 et 180 du Code des professions.\n\nMontréal, le 17 juillet 2023\nMe Linda Bélanger, avocate\nSecrétaire du conseil de discipline"
       },
       {
-        "type": "limitation",
-        "label": "MESURE D'ENCADREMENT (2023-07-17)",
+        "type": "radiation",
+        "label": "RADIATION (2023-07-17)",
         "date": "2023-07-17",
         "active": false,
         "durationText": "3 ans",
@@ -35341,7 +35407,8 @@
     "rulingLinks": [],
     "deceased": false,
     "primaryType": "radiation",
-    "statusKind": "radiated",
+    "statusKind": "restricted",
+    "formerlyStruckOff": true,
     "sanctionYears": [
       2023
     ],
@@ -35555,13 +35622,13 @@
     "specialtyEn": "Ophthalmology",
     "memberSince": 2021,
     "specialtyYear": 2021,
-    "statusText": "Radié depuis le 2026-08-01",
+    "statusText": "Inscrit - Actif",
     "sanctions": [
       {
         "type": "radiation",
         "label": "RADIATION (2026-08-01)",
         "date": "2026-08-01",
-        "active": true,
+        "active": false,
         "durationText": "2 mois",
         "endDate": "2026-10-01",
         "endDerived": true,
@@ -35572,7 +35639,8 @@
     "rulingLinks": [],
     "deceased": false,
     "primaryType": "radiation",
-    "statusKind": "radiated",
+    "statusKind": "past",
+    "formerlyStruckOff": true,
     "sanctionYears": [
       2026
     ],
@@ -36266,6 +36334,87 @@
       {
         "type": "limitation",
         "date": "2026-09-02"
+      }
+    ]
+  },
+  {
+    "number": "07461",
+    "lastName": "Wilson",
+    "firstName": "Thomas Richard",
+    "city": "Montréal",
+    "specialty": "Pneumologie",
+    "specialtyEn": "Respirology",
+    "memberSince": 2007,
+    "specialtyYear": 2008,
+    "statusText": "Inscrit - Actif (le droit d'exercer de ce membre est limité)",
+    "sanctions": [
+      {
+        "type": "limitation",
+        "label": "LIMITATION D'EXERCICE (2026-10-01)",
+        "date": "2026-10-01",
+        "active": true,
+        "reason": "Le médecin cessera les soins intensifs au plus tard le 30 septembre 2026.\n\nLe 22 septembre 2026"
+      }
+    ],
+    "caseCount": 1,
+    "rulingLinks": [],
+    "deceased": false,
+    "primaryType": "limitation",
+    "statusKind": "restricted",
+    "sanctionYears": [
+      2026
+    ],
+    "specialties": [
+      "Pneumologie"
+    ],
+    "notices": [
+      {
+        "type": "limitation",
+        "date": "2026-10-01"
+      }
+    ]
+  },
+  {
+    "number": "80498",
+    "lastName": "Papanastasiou",
+    "firstName": "Vasilios W.",
+    "city": "Westmount",
+    "specialty": "Chirurgie plastique",
+    "specialtyEn": "Plastic Surgery",
+    "memberSince": 1980,
+    "specialtyYear": 1985,
+    "statusText": "Inscrit - Actif (le droit d'exercer de ce membre est limité)",
+    "sanctions": [
+      {
+        "type": "limitation",
+        "label": "LIMITATION D'EXERCICE (2026-10-02)",
+        "date": "2026-10-02",
+        "active": true,
+        "reason": "Le médecin cessera toute intervention majeure sous anesthésie générale au plus tard le 17 décembre 2026.\n\nLe 02 octobre 2026"
+      },
+      {
+        "type": "commitment",
+        "label": "CESSATION D'EXERCICE",
+        "date": "2026-10-02",
+        "active": true,
+        "reason": "Le médecin cessera l’exercice de la médecine au plus tard le 31 décembre 2027.\n\nLe 02 octobre 2026"
+      }
+    ],
+    "caseCount": 2,
+    "rulingLinks": [],
+    "deceased": false,
+    "primaryType": "limitation",
+    "statusKind": "restricted",
+    "sanctionYears": [
+      2026
+    ],
+    "specialties": [
+      "Chirurgie plastique"
+    ],
+    "notices": [
+      {
+        "type": "limitation",
+        "date": "2026-10-02"
       }
     ]
   }
