@@ -23465,6 +23465,59 @@
     ]
   },
   {
+    "number": "88407",
+    "lastName": "Gravel",
+    "firstName": "Charles",
+    "city": "Montréal",
+    "specialty": "Chirurgie orthopédique",
+    "specialtyEn": "Orthopedic Surgery",
+    "memberSince": 1988,
+    "specialtyYear": 1991,
+    "statusText": "Radié depuis le 2026-10-12",
+    "sanctions": [
+      {
+        "type": "radiation",
+        "label": "RADIATION (2026-10-12)",
+        "date": "2026-10-12",
+        "active": true,
+        "reason": "AVIS est donné, par les présentes, que le Dr Charles Gravel (permis 88407), exerçant la profession de médecin (chirurgie orthopédique) à Montréal (Québec), a plaidé coupable devant le conseil de discipline du Collège des médecins du Québec des infractions qui lui étaient reprochées :\n\nLe ou vers le 20 février 2023, alors qu’il faisait parvenir à la Dre J.R., médecin évaluateur de Retraite Québec, un rapport d’expertise médicale où il se prononçait sur les diagnostics de Monsieur A., son état de santé, la suffisance ou non de ses traitements, le pronostic, ses limitations fonctionnelles et sa capacité de travail :\n\n- de s’être prononcé sans réserve sur la condition de monsieur A, alors qu’il n’avait pas eu accès aux résultats de tests récents (IRM, scintigraphie osseuse), sans aviser le mandant qu’il ne pouvait exclure la possibilité que le résultat de ces tests modifie son opinion (chef 1)\n\n- d’avoir ajouté la mention « Allégation d’incontinence urinaire qui n’est pas apparente au dossier », en réponse aux questions du mandant, un commentaire laissant croire que cette symptomatologie n’était pas mentionnée au dossier qu’il avait pu consulter alors qu’elle y était mentionnée à plusieurs reprises (chef 2)\n\nLe 19 septembre 2026, le conseil de discipline a imposé au Dr Gravel une radiation d’une période d’un mois sur chacun des deux chefs de la plainte modifiée. Ces périodes de radiation temporaire doivent être purgées concurremment.\n\nLes parties ayant renoncé à leur droit d’en appeler de la décision du Conseil, le Dr Charles Gravel est donc radié du tableau de l’ordre pour une période totalisant 1 (un) mois à compter du 12 octobre 2026.\n\nLe présent avis est donné en vertu des articles 156 et 180 du Code des professions.\n\nLe 12 octobre 2026\nLinda Bélanger, avocate\nSecrétaire du Conseil de discipline"
+      }
+    ],
+    "caseCount": 1,
+    "rulingLinks": [],
+    "deceased": false,
+    "primaryType": "radiation",
+    "statusKind": "radiated",
+    "sanctionYears": [
+      2026
+    ],
+    "specialties": [
+      "Chirurgie orthopédique"
+    ],
+    "decisions": [
+      {
+        "case": "24-2025-01230",
+        "date": "2026-09-19",
+        "grounds": "Défaut dans la conduite à titre d'expert ou d'évaluateur Acte dérogatoire à l’honneur et à la dignité de la profession médicale",
+        "precision": "Décision sur culpabilité et sanction",
+        "precisionStatus": "sanction non exécutoire",
+        "documentId": 512,
+        "hasText": true,
+        "charges": "[…] le Dr Charles Gravel (88407), un professionnel membre du Collège des médecins du Québec, exerçant sa profession à Montréal, a commis des actes dérogatoires, le ou vers le 20 février 2023, alors qu’il faisait parvenir à la Dre J.R., médecin évaluateur de Retraite Québec, un rapport d’expertise médicale où il se prononçait sur les diagnostics de Monsieur A., son état de santé, la suffisance ou non de ses traitements, le pronostic, ses limitations fonctionnelles et sa capacité de travail : 1. En se prononçant sans réserve sur la condition de monsieur A, alors qu’il n’avait pas eu accès aux résultats de tests récents (IRM, scintigraphie osseuse), sans aviser le mandant qu’il ne pouvait exclure la possibilité que le résultat de ces tests modifie son opinion, contrevenant ainsi […] à l’article 59.2 du Code des professions ; 2. En ajoutant la mention « Allégation d’incontinence urinaire qui n’est pas apparente au dossier », en réponse aux questions du mandant, un commentaire laissant croire que cette symptomatologie n’était pas mentionnée au dossier qu’il avait pu consulter alors qu’elle y était mentionnée à plusieurs reprises contrevenant ainsi […] à l’article 59.2 du Code des professions.",
+        "disposition": "IMPOSE à l’intimé une période de radiation temporaire d’un (1) mois sur le chef 1. IMPOSE à l’intimé une période de radiation temporaire concurrente d’un (1) mois sur le chef 2.",
+        "dispositionKinds": [
+          "radiation"
+        ]
+      }
+    ],
+    "notices": [
+      {
+        "type": "radiation",
+        "date": "2026-10-12"
+      }
+    ]
+  },
+  {
     "number": "88416",
     "lastName": "Kieu",
     "firstName": "Cong Van",
@@ -36253,20 +36306,35 @@
     "statusText": "Radié depuis le 2024-06-10",
     "sanctions": [
       {
+        "type": "suspension",
+        "label": "SUSPENSION DU DROIT D'EXERCICE (2026-10-05)",
+        "date": "2026-10-05",
+        "active": false,
+        "reason": "Le droit d'exercer des activités professionnels de Dr Maïga est suspendu en vertu de l'article 51 du Code des professions (état de santé incompatible avec l'exercice de la profession médicale)."
+      },
+      {
         "type": "radiation",
         "label": "RADIATION (2024-06-10)",
         "date": "2024-06-10",
-        "active": true,
+        "active": false,
         "reason": "Le docteur Maïga est radié provisoirement du tableau de l’ordre, en application de l’article 52.1 du Code des professions, jusqu’à ce que la procédure d’examen médical prévue à l’article 48 du Code des professions ait été complétée et que le comité des requêtes ait pris une décision à la suite de l’étude du rapport de l’examen médical.\n\nMontréal, le 10 juin 2024"
       }
     ],
-    "caseCount": 1,
+    "caseCount": 2,
     "rulingLinks": [],
     "deceased": false,
     "primaryType": "radiation",
-    "statusKind": "radiated",
+    "statusKind": "past",
+    "formerlyStruckOff": true,
     "sanctionYears": [
+      2026,
       2024
+    ],
+    "notices": [
+      {
+        "type": "suspension",
+        "date": "2026-10-05"
+      }
     ]
   },
   {
@@ -36415,6 +36483,43 @@
       {
         "type": "limitation",
         "date": "2026-10-02"
+      }
+    ]
+  },
+  {
+    "number": "85055",
+    "lastName": "Denault",
+    "firstName": "Nathalie",
+    "city": "Saint-Hyacinthe",
+    "specialty": "Médecine de famille",
+    "specialtyEn": "Family Medicine",
+    "memberSince": 1985,
+    "specialtyYear": 2010,
+    "statusText": "Radié depuis le 2026-10-08",
+    "sanctions": [
+      {
+        "type": "radiation",
+        "label": "RADIATION (2026-10-08)",
+        "date": "2026-10-08",
+        "active": true,
+        "reason": "La docteure Nathalie Denault est radiée provisoirement du tableau de l’ordre, en application de l’article 52.1 du Code des professions jusqu’à ce que la procédure d’examen médical prévue à l’article 48 du Code des professions ait été complétée et que le comité des requêtes ait pris une décision à la suite de l’étude du rapport de l’examen médical.\n\nLe 08 octobre 2026"
+      }
+    ],
+    "caseCount": 1,
+    "rulingLinks": [],
+    "deceased": false,
+    "primaryType": "radiation",
+    "statusKind": "radiated",
+    "sanctionYears": [
+      2026
+    ],
+    "specialties": [
+      "Médecine de famille"
+    ],
+    "notices": [
+      {
+        "type": "radiation",
+        "date": "2026-10-08"
       }
     ]
   }
