@@ -22152,20 +22152,20 @@
     "specialtyEn": "General Surgery",
     "memberSince": 1986,
     "specialtyYear": 1990,
-    "statusText": "Inscrit - Actif (le droit d'exercer de ce membre est limité)",
+    "statusText": "Inscrit - Actif",
     "sanctions": [
       {
         "type": "limitation",
         "label": "LIMITATION D'EXERCICE (2021-09-09)",
         "date": "2021-09-09",
-        "active": true
+        "active": false
       }
     ],
     "caseCount": 1,
     "rulingLinks": [],
     "deceased": false,
     "primaryType": "limitation",
-    "statusKind": "restricted",
+    "statusKind": "past",
     "sanctionYears": [
       2021
     ],
@@ -23498,9 +23498,8 @@
       {
         "case": "24-2025-01230",
         "date": "2026-09-19",
-        "grounds": "Défaut dans la conduite à titre d'expert ou d'évaluateur Acte dérogatoire à l’honneur et à la dignité de la profession médicale",
+        "result": "Plainte accueillie",
         "precision": "Décision sur culpabilité et sanction",
-        "precisionStatus": "sanction non exécutoire",
         "documentId": 512,
         "hasText": true,
         "charges": "[…] le Dr Charles Gravel (88407), un professionnel membre du Collège des médecins du Québec, exerçant sa profession à Montréal, a commis des actes dérogatoires, le ou vers le 20 février 2023, alors qu’il faisait parvenir à la Dre J.R., médecin évaluateur de Retraite Québec, un rapport d’expertise médicale où il se prononçait sur les diagnostics de Monsieur A., son état de santé, la suffisance ou non de ses traitements, le pronostic, ses limitations fonctionnelles et sa capacité de travail : 1. En se prononçant sans réserve sur la condition de monsieur A, alors qu’il n’avait pas eu accès aux résultats de tests récents (IRM, scintigraphie osseuse), sans aviser le mandant qu’il ne pouvait exclure la possibilité que le résultat de ces tests modifie son opinion, contrevenant ainsi […] à l’article 59.2 du Code des professions ; 2. En ajoutant la mention « Allégation d’incontinence urinaire qui n’est pas apparente au dossier », en réponse aux questions du mandant, un commentaire laissant croire que cette symptomatologie n’était pas mentionnée au dossier qu’il avait pu consulter alors qu’elle y était mentionnée à plusieurs reprises contrevenant ainsi […] à l’article 59.2 du Code des professions.",
@@ -29404,13 +29403,13 @@
     "specialtyEn": "Ophthalmology",
     "memberSince": 1999,
     "specialtyYear": 1999,
-    "statusText": "Inscrit - Actif (le droit d'exercer de ce membre est limité)",
+    "statusText": "Inscrit - Inactif",
     "sanctions": [
       {
         "type": "limitation",
         "label": "LIMITATION D'EXERCICE (2017-02-27)",
         "date": "2017-02-27",
-        "active": true,
+        "active": false,
         "reason": "Le médecin s’engage à ne plus effectuer et ne plus prescrire des traitements de désensibilisation pour les patients présentant un problème d’allergie.\n\nMontréal, le 27 février 2017\nDirection des enquêtes\nSyndic"
       }
     ],
@@ -29418,7 +29417,7 @@
     "rulingLinks": [],
     "deceased": false,
     "primaryType": "limitation",
-    "statusKind": "restricted",
+    "statusKind": "past",
     "formerlyStruckOff": true,
     "sanctionYears": [
       2017
