@@ -9743,17 +9743,38 @@
     "specialtyEn": "Obstetrics and Gynecology",
     "memberSince": 1975,
     "specialtyYear": 1980,
-    "statusText": "Inscrit - Actif",
-    "sanctions": [],
+    "statusText": "Inscrit - Actif (le droit d'exercer de ce membre est limité)",
+    "sanctions": [
+      {
+        "type": "limitation",
+        "label": "LIMITATION D'EXERCICE (2026-10-19)",
+        "date": "2026-10-19",
+        "active": true,
+        "reason": "Le conseil de discipline a imposé une limitation interdisant au médecin d’exercer en milieu hospitalier et de pratiquer en obstétrique.\n\nLe 19 octobre 2026\nConseil de discipline"
+      }
+    ],
     "caseCount": 3,
     "rulingLinks": [],
     "deceased": false,
-    "statusKind": "record",
-    "sanctionYears": [],
+    "primaryType": "limitation",
+    "statusKind": "restricted",
+    "sanctionYears": [
+      2026
+    ],
     "specialties": [
       "Obstétrique et gynécologie"
     ],
     "decisions": [
+      {
+        "case": "24-2024-01207",
+        "date": "2026-10-14",
+        "grounds": "Défaut ou néglige d'élaborer son diagnostic avec la plus grande attention / Défaut ou néglige d'assurer le suivi médical / Non-conformité dans la tenue du dossier médical",
+        "precision": "Décision sur culpabilité et sanction",
+        "precisionStatus": "sanction non exécutoire",
+        "documentId": 516,
+        "hasText": true,
+        "publicationBan": true
+      },
       {
         "case": "24-2022-01127",
         "date": "2024-07-25",
@@ -9771,6 +9792,12 @@
         "hasText": true,
         "publicationBan": true,
         "charges": "reproché au chef d'infraction était d'avoir omis ou négligé de se rendre au chevet de la patiente afin de l'évaluer et de l'examiner dans le cadre de son suivi à titre de médecin traitant?"
+      }
+    ],
+    "notices": [
+      {
+        "type": "limitation",
+        "date": "2026-10-19"
       }
     ]
   },
@@ -24276,6 +24303,13 @@
     "sanctions": [
       {
         "type": "limitation",
+        "label": "LIMITATION D'EXERCICE (2026-10-19)",
+        "date": "2026-10-19",
+        "active": true,
+        "reason": "Le médecin n'émettra pas d'autorisation de consommation de cannabis à des fins médicales à partir du 7 octobre 2026.\n\nLe 19 octobre 2026"
+      },
+      {
+        "type": "limitation",
         "label": "LIMITATION D'EXERCICE (2025-05-29)",
         "date": "2025-05-29",
         "active": true,
@@ -24289,6 +24323,7 @@
     "statusKind": "restricted",
     "formerlyStruckOff": true,
     "sanctionYears": [
+      2026,
       2025
     ],
     "specialties": [
@@ -24323,6 +24358,12 @@
           "radiation",
           "fine"
         ]
+      }
+    ],
+    "notices": [
+      {
+        "type": "limitation",
+        "date": "2026-10-19"
       }
     ]
   },
@@ -30349,7 +30390,7 @@
         "reason": "S'engage à n'effectuer aucune chirurgie des sinus ou des glandes parotides, et à référer à un autre chirurgien ORL tout patient qui, selon son évaluation clinique, pourrait bénéficier de telles interventions..\n\nMontréal, le 7 novembre 2011\nDirection des enquêtes\nSyndic"
       }
     ],
-    "caseCount": 3,
+    "caseCount": 4,
     "rulingLinks": [],
     "deceased": false,
     "primaryType": "limitation",
