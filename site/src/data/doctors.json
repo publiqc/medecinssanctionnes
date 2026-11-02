@@ -18031,6 +18031,13 @@
     "statusText": "Inscrit - Actif (le droit d'exercer de ce membre est limité)",
     "sanctions": [
       {
+        "type": "commitment",
+        "label": "CESSATION D'EXERCICE",
+        "date": "2026-10-26",
+        "active": true,
+        "reason": "Le médecin cessera l’exercice de la médecine au plus tard le 31 décembre 2026.\n\nLe 26 octobre 2026"
+      },
+      {
         "type": "limitation",
         "label": "LIMITATION D'EXERCICE (2025-04-06)",
         "date": "2025-04-06",
@@ -18045,12 +18052,13 @@
         "reason": "S'engage à cesser la pratique de l'urgence en établissement."
       }
     ],
-    "caseCount": 2,
+    "caseCount": 3,
     "rulingLinks": [],
     "deceased": false,
     "primaryType": "limitation",
     "statusKind": "restricted",
     "sanctionYears": [
+      2026,
       2025,
       2011
     ],
@@ -23011,6 +23019,13 @@
     "statusText": "Inscrit - Actif (le droit d'exercer de ce membre est limité)",
     "sanctions": [
       {
+        "type": "commitment",
+        "label": "CESSATION D'EXERCICE",
+        "date": "2026-09-08",
+        "active": true,
+        "reason": "Le médecin cessera l’exercice de la médecine au plus tard le 31 décembre 2026.\n\nLe 08 septembre 2026"
+      },
+      {
         "type": "limitation",
         "label": "LIMITATION D'EXERCICE (2024-12-18)",
         "date": "2024-12-18",
@@ -23018,12 +23033,13 @@
         "reason": "La médecin limitera son exercice de la médecine au suivi des examens (prendre connaissance des résultats, informer les patients de leurs résultats lorsque nécessaire et recommander de consulter un médecin lorsque nécessaire) à compter du 1er janvier 2025.\n\nMontréal, le 18 décembre 2024"
       }
     ],
-    "caseCount": 1,
+    "caseCount": 2,
     "rulingLinks": [],
     "deceased": false,
     "primaryType": "limitation",
     "statusKind": "restricted",
     "sanctionYears": [
+      2026,
       2024
     ],
     "specialties": [
@@ -26109,28 +26125,54 @@
     "specialtyEn": "Family Medicine",
     "memberSince": 1994,
     "specialtyYear": 2010,
-    "statusText": "Inscrit - Actif (le droit d'exercer de ce membre est limité)",
+    "statusText": "Radié depuis le 2026-10-29",
     "sanctions": [
+      {
+        "type": "radiation",
+        "label": "RADIATION (2026-10-29)",
+        "date": "2026-10-29",
+        "active": true,
+        "durationText": "4 mois",
+        "endDate": "2027-02-28",
+        "endDerived": true,
+        "reason": "AVIS est donné, par les présentes, que le Dr Peter Paul Talko (permis 94113), exerçant la profession de médecin (médecine de famille) à Shawville (Québec), a plaidé coupable devant le conseil de discipline du Collège des médecins du Québec des infractions qui lui étaient reprochées :\n\n- de ne pas avoir, depuis le 10 novembre 2024 et à ce jour, à Shawville et/ou Montréal, donné suite aux demandes du syndic adjoint de son ordre professionnel, le Dr Nicolas Raymond, concernant ses omissions de déclarer, à la Commission sur les soins de fin de vie, des aides médicales à mourir demandées, administrées et/ou non administrées (chef 1)\n\n- de ne pas avoir, depuis le 9 septembre 2023 et à ce jour, à Shawville et/ou Québec, respecté les exigences de l’article 46 de la Loi concernant les soins de fin de vie (RLRQ, c. s-32.0001), notamment en omettant d’aviser la Commission sur les soins de fin de vie qu’il a administré l’aide médicale à mourir à la patiente A (chef 2)\n\n- de ne pas avoir, depuis le 4 mars 2024 et à ce jour, à Shawville et/ou Québec, respecté les exigences de l’article 46 de la Loi concernant les soins de fin de vie (RLRQ, c. s-32.0001), notamment en omettant d’aviser la Commission sur les soins de fin de vie qu’il a administré l’aide médicale à mourir à la patiente B (chef 3)\n\n- de ne pas avoir, depuis le 4 juillet 2023 et à ce jour, Shawville et/ou Québec, respecté les exigences de l’article 47.1 de la Loi concernant les soins de fin de vie (RLRQ, c. s-32.0001), notamment en omettant d’aviser la Commission sur les soins de fin de vie qu’il n’a pas administré l’aide médicale à mourir à son patient C, alors qu’il avait été saisi d’une demande en ce sens (chef 4)\n\nLe 10 février 2026, le conseil de discipline a imposé au Dr Talko une radiation d’une période de quatre mois sur le chef 1 de la plainte et une radiation d’une période d’un mois sur chacun des chefs 2, 3 et 4 de la plainte. Ces périodes de radiation doivent être purgées concurremment.\n\nLe 11 mars 2026, le Dr Talko en a appelé de la décision du conseil de discipline au Tribunal des professions en vertu de l’article 164 du Code des professions. L’appel a eu pour effet de suspendre l’exécution de la décision rendue.\nDans son jugement rendu le 5 octobre 2026 séance tenante et signifié au Dr Talko le 23 octobre 2026, le Tribunal des professions a rejeté l’appel de Dr Talko.\nLe greffe de discipline ayant été informé par le Tribunal des professions de la signification du jugement le 29 octobre 2026, la radiation entrera donc en vigueur à cette date.\n\nLe Dr Talko est donc radié du tableau de l’ordre pour une période totalisant 4 mois à compter du 29 octobre 2026.\n\nLe présent avis est donné en vertu des articles 156 et 180 du Code des professions.\n\nLe 29 octobre 2026\nLinda Bélanger, avocate\nSecrétaire du conseil de discipline"
+      },
       {
         "type": "limitation",
         "label": "LIMITATION D'EXERCICE (2024-11-28)",
         "date": "2024-11-28",
-        "active": true,
+        "active": false,
         "reason": "Le médecin cessera l’exercice de l’obstétrique et les suivis de grossesse au plus tard le 31 décembre 2024.\n\nLe 28 novembre 2024"
       }
     ],
     "caseCount": 2,
     "rulingLinks": [],
     "deceased": false,
-    "primaryType": "limitation",
-    "statusKind": "restricted",
+    "primaryType": "radiation",
+    "statusKind": "radiated",
     "sanctionYears": [
+      2026,
       2024
     ],
     "specialties": [
       "Médecine de famille"
     ],
     "decisions": [
+      {
+        "case": "24-2025-01218",
+        "date": "2026-10-05",
+        "result": "Plainte accueillie",
+        "grounds": "Entrave au travail d’un officier du Collège Omission relative à l'information auprès de la commission sur les soins de fin de vie",
+        "precision": "Jugement du Tribunal des professions",
+        "documentId": 476,
+        "hasText": true,
+        "publicationBan": true,
+        "charges": "I. ENTRAVE 1) Depuis le 10 novembre 2024 et à ce jour, à Shawville et/ou Montréal, l’Intimé n’a pas donné suite aux demandes du syndic adjoint de son ordre professionnel, le Dr Nicolas Raymond, concernant ses omissions de déclarer, à la Commission sur les soins de fin de vie, des aides médicales à mourir demandées, administrées et/ou non administrées, le tout contrairement aux articles 118 et 120 du Code de déontologie des médecins (RLRQ, c. M-9, r. 17) et à l’article 114 du Code des professions (RLRQ, c. C-26). II. DÉCLARATIONS À LA COMMISSION SUR LES SOINS DE FIN DE VIE 2) Depuis le 9 septembre 2023 et à ce jour, à Shawville et/ou Québec, l’Intimé n’a respecté les exigences de l’article 46 de la Loi concernant les soins de fin de vie (RLRQ, c. s-32.0001), notamment en omettant d’aviser la Commission sur les soins de fin de vie qu’il a administré l’aide médicale à mourir à la patiente A., le tout contrairement à l’article 47 du Code de déontologie des médecins (RLRQ, c. M-9, r. 17) et à l’article 59.2 du Code des professions (RLRQ, c. C-26). 3) Depuis le 4 mars 2024 et à ce jour, à Shawville et/ou Québec, l’Intimé n’a respecté les exigences de l’article 46 de la Loi concernant les soins de fin de vie (RLRQ, c. s-32.0001), notamment en omettant d’aviser la Commission sur les soins de fin de vie qu’il a administré l’aide médicale à mourir à la patiente B., le tout contrairement à l’article 47 du Code de déontologie des médecins (RLRQ, c. M-9, r. 17) et à l’article 59.2 du Code des professions (RLRQ, c. C-26). 4) Depuis le 4 juillet 2023 et à ce jour, Shawville et/ou Québec, l’Intimé n’a respecté les exigences de l’article 47.1 de la Loi concernant les soins de fin de vie (RLRQ, c. s-32.0001), notamment en omettant d’aviser la Commission sur les soins de fin de vie qu’il n’a pas administré l’aide médicale à mourir à son patient C., alors qu’il avait été saisi d’une demande en ce sens, le tout contrairement à l’article 47 du Code de déontologie des médecins (RLRQ, c. M-9, r. 17) et à l’article 59.2 du Code des professions (RLRQ, c. C-26).",
+        "disposition": "IMPOSE à l’intimé une période de radiation de quatre (4) mois. IMPOSE à l’intimé une période de radiation d’un mois.",
+        "dispositionKinds": [
+          "radiation"
+        ]
+      },
       {
         "case": "24-2024-01203",
         "date": "2025-06-05",
@@ -26144,6 +26186,12 @@
         "dispositionKinds": [
           "fine"
         ]
+      }
+    ],
+    "notices": [
+      {
+        "type": "radiation",
+        "date": "2026-10-29"
       }
     ]
   },
@@ -36560,6 +36608,44 @@
       {
         "type": "radiation",
         "date": "2026-10-08"
+      }
+    ]
+  },
+  {
+    "number": "10560",
+    "lastName": "Lee",
+    "firstName": "Candace Yan Wah",
+    "city": "Pointe-Claire",
+    "specialty": "Cardiologie, Médecine interne",
+    "specialtyEn": "Cardiology, Internal Medicine",
+    "memberSince": 2010,
+    "specialtyYear": 2010,
+    "statusText": "Inscrit - Actif (le droit d'exercer de ce membre est limité)",
+    "sanctions": [
+      {
+        "type": "limitation",
+        "label": "LIMITATION D'EXERCICE (2026-11-01)",
+        "date": "2026-11-01",
+        "active": true,
+        "reason": "L’exercice de ce médecin est limité aux seuls actes nécessaires à l’accomplissement d’un stage de perfectionnement en cardiologie ambulatoire.\n\nLe 08 septembre 2026"
+      }
+    ],
+    "caseCount": 1,
+    "rulingLinks": [],
+    "deceased": false,
+    "primaryType": "limitation",
+    "statusKind": "restricted",
+    "sanctionYears": [
+      2026
+    ],
+    "specialties": [
+      "Cardiologie",
+      "Médecine interne"
+    ],
+    "notices": [
+      {
+        "type": "limitation",
+        "date": "2026-11-01"
       }
     ]
   }
