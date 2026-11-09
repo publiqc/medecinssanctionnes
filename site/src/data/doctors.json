@@ -27299,7 +27299,6 @@
       {
         "case": "24-2025-01222",
         "date": "2026-05-27",
-        "grounds": "Défaut d’assurer la prise en charge ou le suivi adéquat Manque de disponibilité et de diligence ou refus de donner les soins requis Geste ou propos reprochables, conduite impersonnelle Problème relationnel avec un collègue ou un autre professionnel Non-conformité dans la tenue du dossier médical Acte dérogatoire à l'honneur et à la dignité de la profession",
         "precision": "Décision rectifiée sur culpabilité et sanction",
         "documentId": 495,
         "hasText": true,
@@ -33095,13 +33094,13 @@
     "specialtyEn": "Family Medicine",
     "memberSince": 2009,
     "specialtyYear": 2010,
-    "statusText": "Radié depuis le 2026-08-07",
+    "statusText": "Inscrit - Actif",
     "sanctions": [
       {
         "type": "radiation",
         "label": "RADIATION (2026-08-07)",
         "date": "2026-08-07",
-        "active": true,
+        "active": false,
         "durationText": "3 mois",
         "endDate": "2026-11-07",
         "endDerived": true,
@@ -33112,7 +33111,8 @@
     "rulingLinks": [],
     "deceased": false,
     "primaryType": "radiation",
-    "statusKind": "radiated",
+    "statusKind": "past",
+    "formerlyStruckOff": true,
     "sanctionYears": [
       2026
     ],
@@ -34385,6 +34385,56 @@
           "radiation",
           "limitation"
         ]
+      }
+    ]
+  },
+  {
+    "number": "12312",
+    "lastName": "Dubois",
+    "firstName": "Marie-Ève",
+    "city": "Lévis",
+    "specialty": "Médecine de famille",
+    "specialtyEn": "Family Medicine",
+    "memberSince": 2012,
+    "specialtyYear": 2012,
+    "statusText": "Radié depuis le 2026-11-06",
+    "sanctions": [
+      {
+        "type": "radiation",
+        "label": "RADIATION (2026-11-06)",
+        "date": "2026-11-06",
+        "active": true,
+        "durationText": "3 mois",
+        "endDate": "2027-02-06",
+        "endDerived": true,
+        "reason": "AVIS est donné, par les présentes, que la Dre Marie-Ève Dubois (permis 12312), exerçant la profession de médecin (médecine de famille) à Lévis (Québec), a plaidé coupable devant le conseil de discipline du Collège des médecins du Québec des infractions qui lui étaient reprochées :\n\n- D’avoir accédé, le ou vers le 3 février 2026, sans autorisation ni justification médicale, aux renseignements de santé confidentiels contenus au dossier médical d’un patient à l’hôpital Hôtel-Dieu de Lévis, commettant ainsi un acte dérogatoire à l’honneur et à la dignité de la profession (chef 1).\n\n- D’avoir accédé, le ou vers le 3 février 2026, sans autorisation ni justification médicale, aux renseignements de santé confidentiels contenus au dossier médical d’une patiente à l’hôpital Hôtel-Dieu de Lévis, commettant ainsi un acte dérogatoire à l’honneur et à la dignité de la profession (chef 2).\n\n- D’avoir accédé, les […] 12 et 26 janvier 2026 et 11 février 2026,sans autorisation ni justification médicale, aux renseignements de santé confidentiels contenus au Dossier Santé Québec (DSQ) d’une patiente; commettant ainsi des actes dérogatoires à l’honneur et à la dignité de la profession (chef 3).\n\nLe 30 septembre 2026, le conseil de discipline a imposé à la Dre Dubois une période de radiation temporaire totalisant 3 mois et 15 jours sur chacun des trois chefs de la plainte modifiée. Ces périodes de radiation temporaire doivent être purgées concurremment.\n\nLe présent avis est donné en vertu des articles 156 et 180 du Code des professions.\n\nLe 06 novembre 2026\nLinda Bélanger, Avocate\nSecrétaire du conseil de discipline"
+      }
+    ],
+    "caseCount": 1,
+    "rulingLinks": [],
+    "deceased": false,
+    "primaryType": "radiation",
+    "statusKind": "radiated",
+    "sanctionYears": [
+      2026
+    ],
+    "specialties": [
+      "Médecine de famille"
+    ],
+    "decisions": [
+      {
+        "case": "24-2026-01241",
+        "date": "2026-09-30",
+        "result": "Plainte accueillie",
+        "precision": "Décision sur culpabilité et sanction",
+        "documentId": 514,
+        "hasText": true
+      }
+    ],
+    "notices": [
+      {
+        "type": "radiation",
+        "date": "2026-11-06"
       }
     ]
   },
@@ -36646,6 +36696,80 @@
       {
         "type": "limitation",
         "date": "2026-11-01"
+      }
+    ]
+  },
+  {
+    "number": "12639",
+    "lastName": "Bérubé-Desrosiers",
+    "firstName": "Maxime",
+    "city": "Terrebonne",
+    "specialty": "Neurologie",
+    "specialtyEn": "Neurology",
+    "memberSince": 2012,
+    "specialtyYear": 2012,
+    "statusText": "Inscrit - Actif (le droit d'exercer de ce membre est limité)",
+    "sanctions": [
+      {
+        "type": "limitation",
+        "label": "LIMITATION D'EXERCICE (2026-11-03)",
+        "date": "2026-11-03",
+        "active": true,
+        "reason": "Le médecin cesse la pratique en médecine esthétique à compter du 9 novembre 2026.\n\nLe 03 novembre 2026"
+      }
+    ],
+    "caseCount": 1,
+    "rulingLinks": [],
+    "deceased": false,
+    "primaryType": "limitation",
+    "statusKind": "restricted",
+    "sanctionYears": [
+      2026
+    ],
+    "specialties": [
+      "Neurologie"
+    ],
+    "notices": [
+      {
+        "type": "limitation",
+        "date": "2026-11-03"
+      }
+    ]
+  },
+  {
+    "number": "84114",
+    "lastName": "Ruelland",
+    "firstName": "Simon",
+    "city": "Pessamit",
+    "specialty": "Médecine de famille",
+    "specialtyEn": "Family Medicine",
+    "memberSince": 1984,
+    "specialtyYear": 2010,
+    "statusText": "Inscrit - Actif (le droit d'exercer de ce membre est limité)",
+    "sanctions": [
+      {
+        "type": "limitation",
+        "label": "LIMITATION D'EXERCICE (2026-11-07)",
+        "date": "2026-11-07",
+        "active": true,
+        "reason": "L’exercice de ce médecin est limité aux seuls actes nécessaires à l’accomplissement d’un stage de perfectionnement en médecine de famille ambulatoire."
+      }
+    ],
+    "caseCount": 1,
+    "rulingLinks": [],
+    "deceased": false,
+    "primaryType": "limitation",
+    "statusKind": "restricted",
+    "sanctionYears": [
+      2026
+    ],
+    "specialties": [
+      "Médecine de famille"
+    ],
+    "notices": [
+      {
+        "type": "limitation",
+        "date": "2026-11-07"
       }
     ]
   }
