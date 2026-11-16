@@ -9758,6 +9758,7 @@
     "deceased": false,
     "primaryType": "limitation",
     "statusKind": "restricted",
+    "formerlyStruckOff": true,
     "sanctionYears": [
       2026
     ],
@@ -9767,13 +9768,19 @@
     "decisions": [
       {
         "case": "24-2024-01207",
-        "date": "2026-10-14",
+        "date": "2026-11-09",
         "grounds": "Défaut ou néglige d'élaborer son diagnostic avec la plus grande attention / Défaut ou néglige d'assurer le suivi médical / Non-conformité dans la tenue du dossier médical",
-        "precision": "Décision sur culpabilité et sanction",
+        "precision": "Décision rectifiée sur culpabilité et sanction",
         "precisionStatus": "sanction non exécutoire",
-        "documentId": 516,
+        "documentId": 520,
         "hasText": true,
-        "publicationBan": true
+        "publicationBan": true,
+        "disposition": "IMPOSE à l'intimé sur le chef 1 une période de radiation de douze (12) mois, une amende de 7 500 $ et une limitation lui interdisant d'exercer en milieu hospitalier et de pratiquer en obstétrique. IMPOSE à l'intimé sur le chef 2 une période de radiation de douze (12) mois, une amende de 7 500 $ et une limitation lui interdisant d'exercer en milieu hospitalier et de pratiquer en obstétrique. IMPOSE à l'intimé sur le chef 3 une amende de 5 000 $.",
+        "dispositionKinds": [
+          "radiation",
+          "limitation",
+          "fine"
+        ]
       },
       {
         "case": "24-2022-01127",
@@ -23516,13 +23523,13 @@
     "specialtyEn": "Orthopedic Surgery",
     "memberSince": 1988,
     "specialtyYear": 1991,
-    "statusText": "Radié depuis le 2026-10-12",
+    "statusText": "Inscrit - Actif",
     "sanctions": [
       {
         "type": "radiation",
         "label": "RADIATION (2026-10-12)",
         "date": "2026-10-12",
-        "active": true,
+        "active": false,
         "reason": "AVIS est donné, par les présentes, que le Dr Charles Gravel (permis 88407), exerçant la profession de médecin (chirurgie orthopédique) à Montréal (Québec), a plaidé coupable devant le conseil de discipline du Collège des médecins du Québec des infractions qui lui étaient reprochées :\n\nLe ou vers le 20 février 2023, alors qu’il faisait parvenir à la Dre J.R., médecin évaluateur de Retraite Québec, un rapport d’expertise médicale où il se prononçait sur les diagnostics de Monsieur A., son état de santé, la suffisance ou non de ses traitements, le pronostic, ses limitations fonctionnelles et sa capacité de travail :\n\n- de s’être prononcé sans réserve sur la condition de monsieur A, alors qu’il n’avait pas eu accès aux résultats de tests récents (IRM, scintigraphie osseuse), sans aviser le mandant qu’il ne pouvait exclure la possibilité que le résultat de ces tests modifie son opinion (chef 1)\n\n- d’avoir ajouté la mention « Allégation d’incontinence urinaire qui n’est pas apparente au dossier », en réponse aux questions du mandant, un commentaire laissant croire que cette symptomatologie n’était pas mentionnée au dossier qu’il avait pu consulter alors qu’elle y était mentionnée à plusieurs reprises (chef 2)\n\nLe 19 septembre 2026, le conseil de discipline a imposé au Dr Gravel une radiation d’une période d’un mois sur chacun des deux chefs de la plainte modifiée. Ces périodes de radiation temporaire doivent être purgées concurremment.\n\nLes parties ayant renoncé à leur droit d’en appeler de la décision du Conseil, le Dr Charles Gravel est donc radié du tableau de l’ordre pour une période totalisant 1 (un) mois à compter du 12 octobre 2026.\n\nLe présent avis est donné en vertu des articles 156 et 180 du Code des professions.\n\nLe 12 octobre 2026\nLinda Bélanger, avocate\nSecrétaire du Conseil de discipline"
       }
     ],
@@ -23530,7 +23537,8 @@
     "rulingLinks": [],
     "deceased": false,
     "primaryType": "radiation",
-    "statusKind": "radiated",
+    "statusKind": "past",
+    "formerlyStruckOff": true,
     "sanctionYears": [
       2026
     ],
@@ -27299,6 +27307,7 @@
       {
         "case": "24-2025-01222",
         "date": "2026-05-27",
+        "result": "Plainte accueillie",
         "precision": "Décision rectifiée sur culpabilité et sanction",
         "documentId": 495,
         "hasText": true,
@@ -36770,6 +36779,44 @@
       {
         "type": "limitation",
         "date": "2026-11-07"
+      }
+    ]
+  },
+  {
+    "number": "98054",
+    "lastName": "Dalery",
+    "firstName": "Karl",
+    "city": "Sherbrooke",
+    "specialty": "Cardiologie, Médecine interne",
+    "specialtyEn": "Cardiology, Internal Medicine",
+    "memberSince": 1998,
+    "specialtyYear": 1999,
+    "statusText": "Inscrit - Actif (le droit d'exercer de ce membre est limité)",
+    "sanctions": [
+      {
+        "type": "limitation",
+        "label": "LIMITATION D'EXERCICE (2026-11-12)",
+        "date": "2026-11-12",
+        "active": true,
+        "reason": "Le médecin n'effectuere plus de procédures, d'évaluation et de traitement en hémodynamie à compter du 6 janvier 2027.\n\nLe 12 novembre 2026"
+      }
+    ],
+    "caseCount": 1,
+    "rulingLinks": [],
+    "deceased": false,
+    "primaryType": "limitation",
+    "statusKind": "restricted",
+    "sanctionYears": [
+      2026
+    ],
+    "specialties": [
+      "Cardiologie",
+      "Médecine interne"
+    ],
+    "notices": [
+      {
+        "type": "limitation",
+        "date": "2026-11-12"
       }
     ]
   }
